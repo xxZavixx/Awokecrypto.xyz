@@ -1,8 +1,15 @@
+/* General Reset */
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: #ffffff; /* Default text color */
+    background-color: #1a1a1a; /* Dark background */
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    color: #ffffff; /* Ensure all text is visible */
 }
 
 .hero-section {
@@ -18,21 +25,28 @@ body {
 
 .ens-minting-section {
     background: linear-gradient(135deg, #1a1a1a, #343a40);
-    color: #fff;
+    color: #ffffff;
     padding: 60px 0;
 }
 
-.ens-minting-section h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+.navbar .nav-link {
+    color: #ffffff !important;
 }
 
-#availability {
-    font-weight: bold;
+.btn {
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
 }
 
 footer {
     background-color: #343a40;
+    color: #ffffff;
     text-align: center;
     padding: 20px 0;
 }

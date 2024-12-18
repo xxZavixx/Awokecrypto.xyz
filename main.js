@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const subdomainInput = document.getElementById("subdomain");
     const preview = document.getElementById("preview");
 
-    // Update the preview as the user types
+    // Update the subdomain preview dynamically
     subdomainInput?.addEventListener("input", () => {
         const subdomain = subdomainInput.value.trim();
         preview.textContent = subdomain
@@ -11,25 +11,20 @@ document.addEventListener("DOMContentLoaded", async () => {
             : "[your-subdomain].awokecrypto.eth";
     });
 
-    // Wallet Detection and Base Network Check
+    // Wallet Detection and Network Check Function
     async function checkWalletAndNetwork() {
         if (typeof window.ethereum === "undefined") {
             alert(
-                "No wallet detected. Use MetaMask on desktop or open this page in Coinbase Wallet's browser."
+                "No wallet detected. Please use MetaMask on desktop or open this page in Coinbase Wallet's browser."
             );
             return;
         }
 
         try {
-            // Request wallet accounts
-            const accounts = await window.ethereum.request({ method: "eth_accounts" });
+            // Request wallet connection
+            await window.ethereum.request({ method: "eth_requestAccounts" });
 
-            if (accounts.length === 0) {
-                alert("No wallet connected. Please connect your wallet to proceed.");
-                return;
-            }
-
-            // Check for Base network
+            // Check if the wallet is connected to the Base network
             const chainId = await window.ethereum.request({ method: "eth_chainId" });
             if (chainId !== baseChainId) {
                 alert("Switching to the Base network...");
@@ -37,40 +32,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                     method: "wallet_switchEthereumChain",
                     params: [{ chainId: baseChainId }],
                 });
-                alert("Network switched to Base. You can now mint your subdomain.");
+                alert("Switched to the Base network. You can now mint your subdomain.");
             }
         } catch (error) {
-            console.error("Wallet connection or network error:", error);
+            console.error("Error connecting wallet or switching networks:", error);
             alert(
-                "There was an issue connecting your wallet or switching networks. Please ensure your wallet supports the Base network."
+                "There was an issue connecting your wallet or switching networks. Please ensure you are using the Base network."
             );
         }
     }
 
-    // Call wallet and network check on page load
+    // Call the function to check wallet and network on page load
     await checkWalletAndNetwork();
 });
-
-document.addEventListener("DOMContentLoaded", async () => {
-    const baseChainId = "0x2105"; // Base Chain ID
-    if (typeof window.ethereum !== "undefined") {
-        try {
-            // Request wallet accounts
-            await window.ethereum.request({ method: "eth_requestAccounts" });
-            const chainId = await window.ethereum.request({ method: "eth_chainId" });
-
-            if (chainId !== baseChainId) {
-                alert("Please switch to the Base network.");
-                await window.ethereum.request({
-                    method: "wallet_switchEthereumChain",
-                    params: [{ chainId: baseChainId }],
-                });
-            }
-        } catch (error) {
-            console.error("Error connecting wallet:", error);
-        }
-    } else {
-        alert("No wallet detected. Please use MetaMask or Coinbase Wallet.");
-    }
-});
-

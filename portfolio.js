@@ -7,8 +7,6 @@ const cryptoNameSelect = document.getElementById("crypto-name");
 const MAX_FREE_TRACKING = 10;
 let isPaidUser = localStorage.getItem("isPaidUser") === "true";
 
-
-
 // Fetch Crypto Prices
 async function fetchCryptoPrices() {
     try {
@@ -62,45 +60,36 @@ form.addEventListener("submit", (e) => {
     const cryptoName = cryptoNameSelect.options[cryptoNameSelect.selectedIndex].text;
     const amount = parseFloat(document.getElementById("crypto-amount").value);
 
+    if (amount < 0 || isNaN(amount)) {
+        alert("Please enter a valid amount (0 to remove or greater than 0 to update).");
+        return;
+    }
+
     const existingCoin = portfolio.find((coin) => coin.id === cryptoId);
 
     // Check payment status if adding a new entry
     if (!existingCoin && !checkPaymentStatus()) return;
 
-    // Remove if holdings are 0
     if (amount === 0) {
         portfolio = portfolio.filter((coin) => coin.id !== cryptoId);
         alert(`${cryptoName} has been removed from your portfolio.`);
-    } else if (amount > 0) {
-        // Update existing or add new
-        if (existingCoin) {
-            existingCoin.holdings = amount;
-        } else {
-            portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
+    } else if (existingCoin) {
+        if (existingCoin.holdings === amount) {
+            alert("No changes were made to the portfolio.");
+            return;
         }
+        existingCoin.holdings = amount;
     } else {
-        alert("Please enter a valid amount (0 to remove or greater than 0 to update).");
+        portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
     }
 
     displayPortfolio();
 });
 
-// Payment Confirmation - Manual Trigger (Simulated)
-function setPaidUserStatus() {
-    localStorage.setItem("isPaidUser", "true");
-    alert("Payment successful! You can now track unlimited cryptos.");
-}
-
-// Initialize Portfolio
-(async () => {
-    displayPortfolio();
-})();
-
-// Simulated Coinbase Payment Confirmation Listener
+// Simulated Payment Confirmation Listener
 const paymentLink = "https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725";
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Simulate Payment Success URL
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has("payment_success")) {
         localStorage.setItem("isPaidUser", "true");
@@ -117,7 +106,7 @@ function redirectToPayment() {
     }, 1000);
 }
 
-// Payment Check (Updated)
+// Payment Check
 function checkPaymentStatus() {
     if (portfolio.length >= MAX_FREE_TRACKING && !isPaidUser) {
         alert("You've reached the free limit of 10 cryptos. Upgrade for $5/month to track more.");
@@ -126,3 +115,8 @@ function checkPaymentStatus() {
     }
     return true;
 }
+
+// Initialize Portfolio
+(async () => {
+    await displayPortfolio();
+})();

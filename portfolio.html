@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Crypto Portfolio | AwokeCrypto</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">AwokeCrypto</a>
+            <button 
+                class="navbar-toggler" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ens-mint.html">ENS Mint</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section py-5">
+        <div class="container">
+            <h1 class="text-center mb-4">My Crypto Portfolio</h1>
+            <p class="text-center mb-5">Live portfolio values fetched from CoinGecko.</p>
+
+            <!-- Portfolio Table -->
+            <div class="table-responsive">
+                <table class="table table-dark table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th>Cryptocurrency</th>
+                            <th>Holdings</th>
+                            <th>Price (USD)</th>
+                            <th>Total Value (USD)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="portfolio-table-body">
+                        <!-- Rows will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Total Value -->
+            <h3 class="text-center mt-4" id="total-value">Loading portfolio...</h3>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2024 AwokeCrypto. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="portfolio.js"></script>
+</body>
+</html>

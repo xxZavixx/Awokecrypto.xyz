@@ -1,52 +1,38 @@
-/* General Reset */
 body {
     font-family: 'Poppins', sans-serif;
+    background-color: #1a1a1a;
+    color: #ffffff;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    color: #ffffff; /* Default text color */
-    background-color: #1a1a1a; /* Dark background */
-}
-
-h1, h2, h3, h4, h5, h6, p {
-    color: #ffffff; /* Ensure all text is visible */
 }
 
 .hero-section {
     background: linear-gradient(to right, #1a1a1a, #343a40);
     height: 100vh;
-    color: #fff;
-    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    text-align: center;
 }
 
 .ens-minting-section {
-    background: linear-gradient(135deg, #1a1a1a, #343a40);
-    color: #ffffff;
     padding: 60px 0;
-}
-
-.navbar .nav-link {
-    color: #ffffff !important;
-}
-
-.btn {
     color: #ffffff;
-    background-color: #007bff;
-    border: none;
-    transition: background 0.3s;
-}
-
-.btn:hover {
-    background-color: #0056b3;
 }
 
 footer {
     background-color: #343a40;
-    color: #ffffff;
-    text-align: center;
     padding: 20px 0;
+    text-align: center;
+    color: #ffffff;
+}
+
+.btn {
+    background-color: #007bff;
+    border: none;
+    color: #ffffff;
+}
+
+.btn:hover {
+    background-color: #0056b3;
 }

@@ -128,3 +128,41 @@ footer {
         width: 90%;
     }
 }
+
+/* Clickable Feature Cards */
+.feature-card {
+    display: block;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffffff;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    text-decoration: none;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.feature-card i {
+    color: #00d4ff;
+    margin-bottom: 15px;
+    font-size: 3rem;
+    text-shadow: 0 0 10px #00d4ff;
+}
+
+.feature-card h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.feature-card p {
+    font-size: 1rem;
+    color: #cccccc;
+}

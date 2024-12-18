@@ -6,7 +6,7 @@ document.getElementById("send-email").addEventListener("click", () => {
     if (name && email && message) {
         const subject = encodeURIComponent(`Message from ${name}`);
         const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-        window.location.href = `mailto:your-email@example.com?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:awokecrypto@cryptobroski.com?subject=${subject}&body=${body}`;
     } else {
         alert("Please fill in all fields before sending.");
     }

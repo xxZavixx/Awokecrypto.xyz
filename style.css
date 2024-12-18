@@ -12,6 +12,7 @@ body {
 .navbar {
     background-color: rgba(0, 0, 0, 0.8);
     border-bottom: 1px solid #007bff;
+    padding: 10px 0;
 }
 
 .navbar-brand {
@@ -75,62 +76,6 @@ body {
 }
 
 .feature-card {
-    text-align: center;
-    background: rgba(0, 0, 0, 0.8);
-    color: #ffffff;
-    padding: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-    width: 300px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
-}
-
-.feature-card i {
-    color: #00d4ff;
-    margin-bottom: 15px;
-    font-size: 3rem;
-    text-shadow: 0 0 10px #00d4ff;
-}
-
-.feature-card h4 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #ffffff;
-}
-
-.feature-card p {
-    font-size: 1rem;
-    color: #cccccc;
-}
-
-/* Footer */
-footer {
-    background-color: #0a0a0a;
-    color: #ffffff;
-    text-align: center;
-    padding: 20px 0;
-    font-size: 0.9rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .hero-section h1 {
-        font-size: 2.5rem;
-    }
-
-    .feature-card {
-        width: 90%;
-    }
-}
-
-/* Clickable Feature Cards */
-.feature-card {
     display: block;
     text-align: center;
     background: rgba(0, 0, 0, 0.8);
@@ -139,6 +84,7 @@ footer {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    width: 300px;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     text-decoration: none;
 }
@@ -167,24 +113,75 @@ footer {
     color: #cccccc;
 }
 
+/* Portfolio Section */
+.portfolio-section {
+    background-color: #121212;
+    color: #ffffff;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.table-dark {
+    background-color: #1e1e2f;
+    color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-dark th, .table-dark td {
+    border-color: #343a40;
+    padding: 12px;
+}
+
+#total-value {
+    color: #00d4ff;
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
 /* Contact Section */
 .contact-section {
     background-color: #0a0a0a;
     color: #ffffff;
+    padding: 50px 20px;
+    text-align: center;
 }
 
 .contact-section h1 {
     color: #00d4ff;
+    margin-bottom: 20px;
 }
 
-.btn-primary, .btn-outline-info {
-    padding: 10px 20px;
+.contact-section form {
+    display: inline-block;
+    width: 100%;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.contact-section input,
+.contact-section textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #333;
     border-radius: 8px;
-    transition: all 0.3s ease;
+    background-color: #1e1e1e;
+    color: #ffffff;
 }
 
-.btn-primary:hover {
-    background-color: #007bff;
+.contact-section input::placeholder,
+.contact-section textarea::placeholder {
+    color: #cccccc;
+}
+
+.btn-outline-info {
+    border: 1px solid #00d4ff;
+    color: #00d4ff;
+    transition: all 0.3s ease;
 }
 
 .btn-outline-info:hover {
@@ -192,21 +189,56 @@ footer {
     color: #ffffff;
 }
 
-/* Portfolio Section */
-.portfolio-section {
-    background-color: #121212;
+/* ENS Viewer Section */
+.ens-viewer {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #141414;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.ens-viewer input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    margin: 10px auto;
+    border: none;
+    border-radius: 8px;
+    background-color: #1e1e1e;
     color: #ffffff;
 }
 
-.table-dark {
-    background-color: #1e1e2f;
+.ens-viewer button {
+    background-color: #00d4ff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    color: #0a0a0a;
+    transition: all 0.3s ease;
+}
+
+.ens-viewer button:hover {
+    background-color: #007bff;
     color: #ffffff;
 }
 
-.table-dark th, .table-dark td {
-    border-color: #343a40;
+/* Footer */
+footer {
+    background-color: #0a0a0a;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.9rem;
 }
 
-#total-value {
-    color: #00d4ff;
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .feature-card {
+        width: 90%;
+    }
 }

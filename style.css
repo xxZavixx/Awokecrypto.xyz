@@ -1,3 +1,21 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.hero-section {
+    background: linear-gradient(to right, #1a1a1a, #343a40);
+    height: 100vh;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .ens-minting-section {
     background: linear-gradient(135deg, #1a1a1a, #343a40);
     color: #fff;
@@ -9,16 +27,12 @@
     margin-bottom: 20px;
 }
 
-#mintButton {
-    background: #00c09d;
-    border: none;
-    transition: background 0.3s;
-}
-
-#mintButton:hover {
-    background: #007a65;
-}
-
 #availability {
     font-weight: bold;
+}
+
+footer {
+    background-color: #343a40;
+    text-align: center;
+    padding: 20px 0;
 }

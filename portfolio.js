@@ -94,3 +94,7 @@ form.addEventListener("submit", (e) => {
 (async () => {
     await displayPortfolio();
 })();
+
+// Mark user as paid after confirmation
+localStorage.setItem("isPaidUser", "true");
+alert("Payment successful! You can now track unlimited cryptos.");

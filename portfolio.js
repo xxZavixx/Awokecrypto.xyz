@@ -11,8 +11,7 @@ let isPaidUser = localStorage.getItem("isPaidUser") === "true";
 function checkPaymentStatus() {
     if (portfolio.length >= MAX_FREE_TRACKING && !isPaidUser) {
         alert("You've reached the free limit of 10 cryptos. Upgrade for $5/month to track more.");
-        // Redirect to payment page
-        window.location.href = "payment.html";
+        window.location.href = "payment.html"; // Redirect to payment page
         return false;
     }
     return true;
@@ -72,18 +71,20 @@ form.addEventListener("submit", (e) => {
     const cryptoName = cryptoNameSelect.options[cryptoNameSelect.selectedIndex].text;
     const amount = parseFloat(document.getElementById("crypto-amount").value);
 
-    if (amount >= 0) {
+    if (amount > 0) {
         const existingCoin = portfolio.find((coin) => coin.id === cryptoId);
         if (existingCoin) {
-            existingCoin.holdings = amount;
+            existingCoin.holdings = amount; // Update existing holdings
         } else {
-            portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
+            portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount }); // Add new entry
         }
         displayPortfolio();
+    } else {
+        alert("Please enter a valid amount greater than 0.");
     }
 });
 
-// Initialize
+// Initialize Portfolio
 (async () => {
-    displayPortfolio();
+    await displayPortfolio();
 })();

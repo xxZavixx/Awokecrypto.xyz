@@ -50,27 +50,43 @@ document.getElementById("theme-toggle").addEventListener("click", () => {
     document.body.classList.toggle("light-theme");
 });
 
-// ENS Profile Lookup
+// Import Ethers.js (add this script tag in index.html if not already included)
+const ethersScript = document.createElement("script");
+ethersScript.src = "https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js";
+document.head.appendChild(ethersScript);
+
+// ENS Profile Viewer Logic
 document.getElementById("lookup-btn").addEventListener("click", async () => {
     const input = document.getElementById("ens-input").value;
     const resultDiv = document.getElementById("ens-result");
 
     if (!input) {
-        resultDiv.textContent = "Please enter an ENS name or address.";
+        resultDiv.textContent = "Please enter an ENS name or wallet address.";
         return;
     }
 
     resultDiv.textContent = "Looking up ENS details...";
+
     try {
-        const response = await fetch(`https://api.ens.domains/name/${input}`);
-        const data = await response.json();
-        resultDiv.innerHTML = `
-            <p><strong>Address:</strong> ${data.address}</p>
-            <p><strong>Avatar:</strong> ${data.avatar || "Not set"}</p>
-        `;
+        // Connect to Ethereum mainnet provider
+        const provider = new ethers.providers.InfuraProvider("homestead", "YOUR_INFURA_API_KEY");
+
+        // Resolve ENS details
+        const address = await provider.resolveName(input);
+        const avatar = await provider.getAvatar(input);
+
+        if (address) {
+            resultDiv.innerHTML = `
+                <p><strong>ENS Name:</strong> ${input}</p>
+                <p><strong>Address:</strong> ${address}</p>
+                <p><strong>Avatar:</strong> ${avatar ? `<img src="${avatar}" alt="Avatar" style="max-width:100px;">` : "Not set"}</p>
+            `;
+        } else {
+            resultDiv.textContent = "No ENS details found for this input.";
+        }
     } catch (error) {
+        console.error("Error fetching ENS details:", error);
         resultDiv.textContent = "Failed to fetch ENS details. Please try again.";
     }
 });
-
 

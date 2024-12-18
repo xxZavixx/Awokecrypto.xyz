@@ -50,3 +50,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Call wallet and network check on page load
     await checkWalletAndNetwork();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const disconnectBtn = document.getElementById("disconnectWallet");
+
+    disconnectBtn?.addEventListener("click", () => {
+        if (typeof window.ethereum !== "undefined") {
+            // Manually reset wallet connection
+            window.ethereum.request({
+                method: "wallet_requestPermissions",
+                params: [{ eth_accounts: {} }]
+            }).then(() => {
+                console.log("Wallet permissions reset.");
+                alert("Wallet disconnected. Reload the page to reconnect.");
+                location.reload();
+            }).catch((err) => {
+                console.error("Disconnect failed:", err);
+                alert("Unable to disconnect wallet. Try refreshing the page.");
+            });
+        } else {
+            alert("No wallet detected to disconnect.");
+        }
+    });
+});

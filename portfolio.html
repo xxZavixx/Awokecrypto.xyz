@@ -37,9 +37,31 @@
 
     <!-- Portfolio Section -->
     <section class="portfolio-section py-5">
-        <div class="container">
+        <div class="container-fluid">
             <h1 class="text-center mb-4">My Crypto Portfolio</h1>
-            <p class="text-center mb-5">Live portfolio values fetched from CoinGecko.</p>
+            <p class="text-center mb-5">Live portfolio values fetched from CoinGecko. Update your holdings below.</p>
+
+            <!-- Update Holdings Form -->
+            <div class="text-center mb-4">
+                <form id="update-portfolio-form" class="row g-2 justify-content-center">
+                    <div class="col-auto">
+                        <label for="crypto-name" class="form-label">Crypto</label>
+                        <select id="crypto-name" class="form-select">
+                            <option value="bitcoin">Bitcoin</option>
+                            <option value="ethereum">Ethereum</option>
+                            <option value="cardano">Cardano</option>
+                            <option value="ripple">XRP</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <label for="crypto-amount" class="form-label">Amount</label>
+                        <input type="number" id="crypto-amount" class="form-control" placeholder="e.g., 2" min="0" step="any" required>
+                    </div>
+                    <div class="col-auto align-self-end">
+                        <button type="submit" class="btn btn-primary">Update Holdings</button>
+                    </div>
+                </form>
+            </div>
 
             <!-- Portfolio Table -->
             <div class="table-responsive">

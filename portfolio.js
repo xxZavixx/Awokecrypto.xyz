@@ -60,11 +60,6 @@ form.addEventListener("submit", (e) => {
     const cryptoName = cryptoNameSelect.options[cryptoNameSelect.selectedIndex].text;
     const amount = parseFloat(document.getElementById("crypto-amount").value);
 
-    if (amount < 0 || isNaN(amount)) {
-        alert("Please enter a valid amount (0 to remove or greater than 0 to update).");
-        return;
-    }
-
     const existingCoin = portfolio.find((coin) => coin.id === cryptoId);
 
     // Check payment status if adding a new entry
@@ -74,10 +69,6 @@ form.addEventListener("submit", (e) => {
         portfolio = portfolio.filter((coin) => coin.id !== cryptoId);
         alert(`${cryptoName} has been removed from your portfolio.`);
     } else if (existingCoin) {
-        if (existingCoin.holdings === amount) {
-            alert("No changes were made to the portfolio.");
-            return;
-        }
         existingCoin.holdings = amount;
     } else {
         portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
@@ -86,7 +77,7 @@ form.addEventListener("submit", (e) => {
     displayPortfolio();
 });
 
-// Simulated Payment Confirmation Listener
+// Payment Confirmation - Manual Trigger
 const paymentLink = "https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725";
 
 document.addEventListener("DOMContentLoaded", () => {

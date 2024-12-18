@@ -45,3 +45,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Call the function to check wallet and network on page load
     await checkWalletAndNetwork();
 });
+// Theme Toggle
+document.getElementById("theme-toggle").addEventListener("click", () => {
+    document.body.classList.toggle("light-theme");
+});
+
+// ENS Profile Lookup
+document.getElementById("lookup-btn").addEventListener("click", async () => {
+    const input = document.getElementById("ens-input").value;
+    const resultDiv = document.getElementById("ens-result");
+
+    if (!input) {
+        resultDiv.textContent = "Please enter an ENS name or address.";
+        return;
+    }
+
+    resultDiv.textContent = "Looking up ENS details...";
+    try {
+        const response = await fetch(`https://api.ens.domains/name/${input}`);
+        const data = await response.json();
+        resultDiv.innerHTML = `
+            <p><strong>Address:</strong> ${data.address}</p>
+            <p><strong>Avatar:</strong> ${data.avatar || "Not set"}</p>
+        `;
+    } catch (error) {
+        resultDiv.textContent = "Failed to fetch ENS details. Please try again.";
+    }
+});
+
+

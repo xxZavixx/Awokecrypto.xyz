@@ -32,6 +32,10 @@
         <div class="container text-center">
             <h1>Mint Your ENS Subdomain</h1>
             <p>Claim your personalized subdomain under <strong>awokecrypto.eth</strong>.</p>
+            <p class="text-muted">
+                Ensure your wallet is connected to the <strong>Base</strong> network before minting. 
+                You'll need a small amount of ETH for gas fees.
+            </p>
             <form id="ensMintForm" class="mt-4">
                 <div class="mb-3">
                     <label for="subdomain" class="form-label">Enter Desired Subdomain</label>
@@ -39,8 +43,11 @@
                 </div>
                 <div class="mb-3">
                     <p>Full Subdomain Preview: <strong id="preview">[your-subdomain].awokecrypto.eth</strong></p>
+                    <p id="availability" class="text-muted"></p>
                 </div>
-                <button type="button" id="mintButton" class="btn btn-primary btn-lg">Mint Subdomain</button>
+
+                <!-- Namespace Minting Widget -->
+                <div id="namespace-widget-container"></div>
             </form>
         </div>
     </section>
@@ -52,6 +59,16 @@
         </div>
     </footer>
 
+    <!-- Namespace Widget Script -->
+    <script
+      defer 
+      id="namespace-widget" 
+      widgetId="0xb0cdb050537dd832d4b6a0813ea344a90be9083e6b01deacb2e541dcdc1bfff4" 
+      type="module" 
+      src="https://namespace.fra1.digitaloceanspaces.com/widget/latest/bundle.js">
+    </script>
+
+    <!-- Other Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
 </body>

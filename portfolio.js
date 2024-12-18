@@ -7,13 +7,17 @@ const cryptoNameSelect = document.getElementById("crypto-name");
 const MAX_FREE_TRACKING = 10;
 let isPaidUser = localStorage.getItem("isPaidUser") === "true";
 
-// Fetch Crypto Prices
+// Fetch Crypto Prices (Top 500 Cryptos)
 async function fetchCryptoPrices() {
     try {
-        const response = await fetch(
-            "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1"
-        );
-        return await response.json();
+        const urls = [
+            "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1",
+            "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=2",
+        ];
+
+        const responses = await Promise.all(urls.map(url => fetch(url)));
+        const data = await Promise.all(responses.map(res => res.json()));
+        return data.flat();
     } catch (error) {
         console.error("Error fetching prices:", error);
         return null;
@@ -55,59 +59,53 @@ async function displayPortfolio() {
 // Update Holdings
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-
     const cryptoId = cryptoNameSelect.value;
     const cryptoName = cryptoNameSelect.options[cryptoNameSelect.selectedIndex].text;
     const amount = parseFloat(document.getElementById("crypto-amount").value);
 
+    if (!isPaidUser && portfolio.length >= MAX_FREE_TRACKING) {
+        alert("You've reached the free limit of 10 cryptos. Please upgrade to track more.");
+        window.open("https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725", "_blank");
+        return;
+    }
+
     const existingCoin = portfolio.find((coin) => coin.id === cryptoId);
-
-    // Check payment status if adding a new entry
-    if (!existingCoin && !checkPaymentStatus()) return;
-
     if (amount === 0) {
         portfolio = portfolio.filter((coin) => coin.id !== cryptoId);
         alert(`${cryptoName} has been removed from your portfolio.`);
-    } else if (existingCoin) {
-        existingCoin.holdings = amount;
+    } else if (amount > 0) {
+        if (existingCoin) {
+            existingCoin.holdings = amount;
+        } else {
+            portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
+        }
     } else {
-        portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
+        alert("Please enter a valid amount.");
     }
 
     displayPortfolio();
 });
 
-// Payment Confirmation - Manual Trigger
-const paymentLink = "https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725";
-
-document.addEventListener("DOMContentLoaded", () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has("payment_success")) {
-        localStorage.setItem("isPaidUser", "true");
-        alert("Payment confirmed! You can now track unlimited cryptos.");
-        displayPortfolio();
+// Search Crypto
+async function searchCrypto() {
+    const query = document.getElementById("crypto-search").value.trim();
+    if (!query) return alert("Please enter a cryptocurrency name.");
+    const response = await fetch(`https://api.coingecko.com/api/v3/search?query=${query}`);
+    const data = await response.json();
+    if (data.coins.length) {
+        alert(`Results: ${data.coins.map(coin => coin.name).join(", ")}`);
+    } else {
+        alert("No results found.");
     }
-});
-
-// Redirect to Payment
-function redirectToPayment() {
-    window.open(paymentLink, "_blank");
-    setTimeout(() => {
-        alert("After completing the payment, return to the site and add '?payment_success=true' in the URL.");
-    }, 1000);
-}
-
-// Payment Check
-function checkPaymentStatus() {
-    if (portfolio.length >= MAX_FREE_TRACKING && !isPaidUser) {
-        alert("You've reached the free limit of 10 cryptos. Upgrade for $5/month to track more.");
-        redirectToPayment();
-        return false;
-    }
-    return true;
 }
 
 // Initialize Portfolio
 (async () => {
-    await displayPortfolio();
+    const prices = await fetchCryptoPrices();
+    if (prices) {
+        cryptoNameSelect.innerHTML = prices.map(crypto => 
+            `<option value="${crypto.id}">${crypto.name}</option>`
+        ).join("");
+    }
+    displayPortfolio();
 })();

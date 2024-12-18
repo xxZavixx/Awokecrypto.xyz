@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
         availability.textContent = ""; // Clear availability message
     });
 
-    // Mock availability check (you can replace this with an actual API call)
+    // Mock availability check
     subdomainInput.addEventListener("blur", function () {
         const subdomain = subdomainInput.value.trim();
         if (subdomain) {

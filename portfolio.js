@@ -6,15 +6,23 @@ const cryptoNameSelect = document.getElementById("crypto-name");
 
 const MAX_FREE_TRACKING = 10;
 let isPaidUser = localStorage.getItem("isPaidUser") === "true";
+const purchaseDate = localStorage.getItem("purchaseDate");
 
-// Payment Check
-function checkPaymentStatus() {
-    if (portfolio.length >= MAX_FREE_TRACKING && !isPaidUser) {
-        alert("You've reached the free limit of 10 cryptos. Upgrade for $5/month to track more.");
-        window.location.href = "payment.html"; // Redirect to payment page
-        return false;
+// Check if 30 days have passed since payment
+function checkSubscriptionStatus() {
+    if (isPaidUser && purchaseDate) {
+        const purchaseDateObj = new Date(purchaseDate);
+        const currentDate = new Date();
+        const daysPassed = (currentDate - purchaseDateObj) / (1000 * 60 * 60 * 24);
+
+        if (daysPassed >= 30) {
+            alert("Your subscription has expired. Please renew to continue tracking unlimited cryptos.");
+            localStorage.removeItem("isPaidUser");
+            localStorage.removeItem("purchaseDate");
+            isPaidUser = false;
+            window.location.href = "payment.html"; // Redirect to payment page
+        }
     }
-    return true;
 }
 
 // Fetch Crypto Prices
@@ -65,6 +73,7 @@ async function displayPortfolio() {
 // Update Holdings
 form.addEventListener("submit", (e) => {
     e.preventDefault();
+
     if (!checkPaymentStatus()) return;
 
     const cryptoId = cryptoNameSelect.value;
@@ -90,11 +99,32 @@ form.addEventListener("submit", (e) => {
     displayPortfolio();
 });
 
+// Mark user as paid after confirmation
+function markPaymentSuccess() {
+    localStorage.setItem("isPaidUser", "true");
+    localStorage.setItem("purchaseDate", new Date().toISOString());
+    alert("Payment successful! You can now track unlimited cryptos.");
+    window.location.reload();
+}
+
+// Check Payment Status
+function checkPaymentStatus() {
+    if (portfolio.length >= MAX_FREE_TRACKING && !isPaidUser) {
+        alert("You've reached the free limit of 10 cryptos. Upgrade for $5/month to track more.");
+        window.location.href = "payment.html"; // Redirect to payment page
+        return false;
+    }
+    return true;
+}
+
 // Initialize Portfolio
 (async () => {
+    checkSubscriptionStatus();
     await displayPortfolio();
 })();
 
-// Mark user as paid after confirmation
-localStorage.setItem("isPaidUser", "true");
-alert("Payment successful! You can now track unlimited cryptos.");
+// Simulate Successful Payment
+const params = new URLSearchParams(window.location.search);
+if (params.get("payment") === "success") {
+    markPaymentSuccess();
+}

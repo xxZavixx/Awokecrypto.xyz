@@ -7,15 +7,7 @@ const cryptoNameSelect = document.getElementById("crypto-name");
 const MAX_FREE_TRACKING = 10;
 let isPaidUser = localStorage.getItem("isPaidUser") === "true";
 
-// Payment Check
-function checkPaymentStatus() {
-    if (portfolio.length >= MAX_FREE_TRACKING && !isPaidUser) {
-        alert("You've reached the free limit of 10 cryptos. Upgrade for $5/month to track more.");
-        window.open("https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725", "_blank");
-        return false;
-    }
-    return true;
-}
+
 
 // Fetch Crypto Prices
 async function fetchCryptoPrices() {
@@ -103,3 +95,34 @@ function setPaidUserStatus() {
 (async () => {
     displayPortfolio();
 })();
+
+// Simulated Coinbase Payment Confirmation Listener
+const paymentLink = "https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725";
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Simulate Payment Success URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("payment_success")) {
+        localStorage.setItem("isPaidUser", "true");
+        alert("Payment confirmed! You can now track unlimited cryptos.");
+        displayPortfolio();
+    }
+});
+
+// Redirect to Payment
+function redirectToPayment() {
+    window.open(paymentLink, "_blank");
+    setTimeout(() => {
+        alert("After completing the payment, return to the site and add '?payment_success=true' in the URL.");
+    }, 1000);
+}
+
+// Payment Check (Updated)
+function checkPaymentStatus() {
+    if (portfolio.length >= MAX_FREE_TRACKING && !isPaidUser) {
+        alert("You've reached the free limit of 10 cryptos. Upgrade for $5/month to track more.");
+        redirectToPayment();
+        return false;
+    }
+    return true;
+}

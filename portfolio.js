@@ -1,4 +1,4 @@
-const portfolio = [
+const portfolio = JSON.parse(localStorage.getItem("portfolio")) || [
     { name: "Bitcoin", symbol: "bitcoin", holdings: 0.5 },
     { name: "Ethereum", symbol: "ethereum", holdings: 2 },
     { name: "Cardano", symbol: "cardano", holdings: 1000 },
@@ -48,5 +48,20 @@ async function displayPortfolio() {
 
     totalValueElement.textContent = `Total Portfolio Value: $${totalPortfolioValue.toFixed(2)}`;
 }
+
+document.getElementById("update-portfolio-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const cryptoName = document.getElementById("crypto-name").value;
+    const cryptoAmount = parseFloat(document.getElementById("crypto-amount").value);
+
+    if (cryptoAmount >= 0) {
+        const coin = portfolio.find(c => c.symbol === cryptoName);
+        if (coin) {
+            coin.holdings = cryptoAmount;
+            localStorage.setItem("portfolio", JSON.stringify(portfolio));
+            displayPortfolio();
+        }
+    }
+});
 
 displayPortfolio();

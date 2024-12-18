@@ -51,4 +51,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     await checkWalletAndNetwork();
 });
 
+document.addEventListener("DOMContentLoaded", async () => {
+    const baseChainId = "0x2105"; // Base Chain ID
+    if (typeof window.ethereum !== "undefined") {
+        try {
+            // Request wallet accounts
+            await window.ethereum.request({ method: "eth_requestAccounts" });
+            const chainId = await window.ethereum.request({ method: "eth_chainId" });
+
+            if (chainId !== baseChainId) {
+                alert("Please switch to the Base network.");
+                await window.ethereum.request({
+                    method: "wallet_switchEthereumChain",
+                    params: [{ chainId: baseChainId }],
+                });
+            }
+        } catch (error) {
+            console.error("Error connecting wallet:", error);
+        }
+    } else {
+        alert("No wallet detected. Please use MetaMask or Coinbase Wallet.");
+    }
+});
 

@@ -69,7 +69,7 @@ document.getElementById("lookup-btn").addEventListener("click", async () => {
 
     try {
         // Connect to Ethereum mainnet provider
-        const provider = new ethers.providers.InfuraProvider("homestead", "YOUR_INFURA_API_KEY");
+        const provider = new ethers.providers.InfuraProvider("homestead", "0a35e75170c9460a8c66563b57913d81");
 
         // Resolve ENS details
         const address = await provider.resolveName(input);

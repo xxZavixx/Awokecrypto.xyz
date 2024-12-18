@@ -13,17 +13,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">AwokeCrypto</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                </ul>
-            </div>
         </div>
     </nav>
 
@@ -32,9 +21,9 @@
         <div class="container text-center">
             <h1>Mint Your ENS Subdomain</h1>
             <p>Claim your personalized subdomain under <strong>awokecrypto.eth</strong>.</p>
-            <p class="text-muted">
-                Ensure your wallet is connected to the <strong>Base</strong> network before minting. 
-                You'll need a small amount of ETH for gas fees.
+            <p class="text-warning">
+                If you are using Coinbase Wallet, open this page in the <strong>Coinbase Wallet browser</strong> for a seamless minting experience. 
+                Alternatively, use MetaMask or another supported wallet.
             </p>
             <form id="ensMintForm" class="mt-4">
                 <div class="mb-3">
@@ -43,7 +32,6 @@
                 </div>
                 <div class="mb-3">
                     <p>Full Subdomain Preview: <strong id="preview">[your-subdomain].awokecrypto.eth</strong></p>
-                    <p id="availability" class="text-muted"></p>
                 </div>
 
                 <!-- Namespace Minting Widget -->
@@ -67,8 +55,6 @@
       type="module" 
       src="https://namespace.fra1.digitaloceanspaces.com/widget/latest/bundle.js">
     </script>
-
-    <!-- Other Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="main.js"></script>
 </body>

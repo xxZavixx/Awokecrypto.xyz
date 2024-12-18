@@ -6,23 +6,15 @@ const cryptoNameSelect = document.getElementById("crypto-name");
 
 const MAX_FREE_TRACKING = 10;
 let isPaidUser = localStorage.getItem("isPaidUser") === "true";
-const purchaseDate = localStorage.getItem("purchaseDate");
 
-// Check if 30 days have passed since payment
-function checkSubscriptionStatus() {
-    if (isPaidUser && purchaseDate) {
-        const purchaseDateObj = new Date(purchaseDate);
-        const currentDate = new Date();
-        const daysPassed = (currentDate - purchaseDateObj) / (1000 * 60 * 60 * 24);
-
-        if (daysPassed >= 30) {
-            alert("Your subscription has expired. Please renew to continue tracking unlimited cryptos.");
-            localStorage.removeItem("isPaidUser");
-            localStorage.removeItem("purchaseDate");
-            isPaidUser = false;
-            window.location.href = "payment.html"; // Redirect to payment page
-        }
+// Payment Check
+function checkPaymentStatus() {
+    if (portfolio.length >= MAX_FREE_TRACKING && !isPaidUser) {
+        alert("You've reached the free limit of 10 cryptos. Upgrade for $5/month to track more.");
+        window.open("https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725", "_blank");
+        return false;
     }
+    return true;
 }
 
 // Fetch Crypto Prices
@@ -74,57 +66,40 @@ async function displayPortfolio() {
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    if (!checkPaymentStatus()) return;
-
     const cryptoId = cryptoNameSelect.value;
     const cryptoName = cryptoNameSelect.options[cryptoNameSelect.selectedIndex].text;
     const amount = parseFloat(document.getElementById("crypto-amount").value);
 
-    // If amount is 0, remove the cryptocurrency from the portfolio
+    const existingCoin = portfolio.find((coin) => coin.id === cryptoId);
+
+    // Check payment status if adding a new entry
+    if (!existingCoin && !checkPaymentStatus()) return;
+
+    // Remove if holdings are 0
     if (amount === 0) {
         portfolio = portfolio.filter((coin) => coin.id !== cryptoId);
         alert(`${cryptoName} has been removed from your portfolio.`);
     } else if (amount > 0) {
-        // Update existing or add new entry
-        const existingCoin = portfolio.find((coin) => coin.id === cryptoId);
+        // Update existing or add new
         if (existingCoin) {
             existingCoin.holdings = amount;
         } else {
             portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
         }
     } else {
-        alert("Please enter a valid amount (greater than 0 or 0 to remove).");
+        alert("Please enter a valid amount (0 to remove or greater than 0 to update).");
     }
 
     displayPortfolio();
 });
 
-// Mark user as paid after confirmation
-function markPaymentSuccess() {
+// Payment Confirmation - Manual Trigger (Simulated)
+function setPaidUserStatus() {
     localStorage.setItem("isPaidUser", "true");
-    localStorage.setItem("purchaseDate", new Date().toISOString());
     alert("Payment successful! You can now track unlimited cryptos.");
-    window.location.reload();
-}
-
-// Check Payment Status
-function checkPaymentStatus() {
-    if (portfolio.length >= MAX_FREE_TRACKING && !isPaidUser) {
-        alert("You've reached the free limit of 10 cryptos. Upgrade for $5/month to track more.");
-        window.location.href = "payment.html"; // Redirect to payment page
-        return false;
-    }
-    return true;
 }
 
 // Initialize Portfolio
 (async () => {
-    checkSubscriptionStatus();
-    await displayPortfolio();
+    displayPortfolio();
 })();
-
-// Simulate Successful Payment
-const params = new URLSearchParams(window.location.search);
-if (params.get("payment") === "success") {
-    markPaymentSuccess();
-}

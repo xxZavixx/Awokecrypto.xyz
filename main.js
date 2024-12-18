@@ -1,49 +1,39 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async () => {
+    const baseChainId = "0x2105"; // Base Chain ID
     const subdomainInput = document.getElementById("subdomain");
     const preview = document.getElementById("preview");
-    const availability = document.getElementById("availability");
-    const namespaceWidgetContainer = document.getElementById("namespace-widget-container");
 
     // Update the preview as the user types
-    subdomainInput.addEventListener("input", function () {
+    subdomainInput?.addEventListener("input", function () {
         const subdomain = subdomainInput.value.trim();
-        preview.textContent = subdomain ? `${subdomain}.awokecrypto.eth` : "[your-subdomain].awokecrypto.eth";
-        availability.textContent = ""; // Clear availability message
+        preview.textContent = subdomain
+            ? `${subdomain}.awokecrypto.eth`
+            : "[your-subdomain].awokecrypto.eth";
     });
 
-    // Mock availability check
-    subdomainInput.addEventListener("blur", function () {
-        const subdomain = subdomainInput.value.trim();
-        if (subdomain) {
-            const isAvailable = Math.random() > 0.5; // Simulate 50% availability
-            availability.textContent = isAvailable
-                ? "Subdomain is available!"
-                : "Subdomain is already taken.";
-            availability.style.color = isAvailable ? "green" : "red";
-        }
-    });
-
-    // Wallet and Network Check for Base
-    async function checkWalletAndNetwork() {
-        if (typeof window.ethereum !== "undefined") {
-            try {
+    // Wallet Detection and Network Switch
+    if (typeof window.ethereum !== "undefined") {
+        try {
+            const accounts = await window.ethereum.request({ method: "eth_accounts" });
+            if (accounts.length === 0) {
+                alert("No wallet detected. Connect your wallet to proceed.");
+            } else {
                 const chainId = await window.ethereum.request({ method: "eth_chainId" });
-                const baseChainId = "0x2105"; // Base chain ID
                 if (chainId !== baseChainId) {
-                    alert("Please switch your wallet to the Base network.");
+                    alert("Please switch to the Base network for minting.");
                     await window.ethereum.request({
                         method: "wallet_switchEthereumChain",
                         params: [{ chainId: baseChainId }],
                     });
                 }
-            } catch (error) {
-                console.error("Error checking network or switching chains:", error);
             }
-        } else {
-            alert("Please install a Web3 wallet like MetaMask to proceed.");
+        } catch (error) {
+            console.error("Error with wallet connection:", error);
+            alert("Please use a supported wallet and connect to the Base network.");
         }
+    } else {
+        alert(
+            "No wallet detected. Use MetaMask on desktop or open this page in Coinbase Wallet's browser."
+        );
     }
-
-    // Call wallet and network check on page load
-    checkWalletAndNetwork();
 });

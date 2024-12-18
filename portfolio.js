@@ -71,17 +71,23 @@ form.addEventListener("submit", (e) => {
     const cryptoName = cryptoNameSelect.options[cryptoNameSelect.selectedIndex].text;
     const amount = parseFloat(document.getElementById("crypto-amount").value);
 
-    if (amount > 0) {
+    // If amount is 0, remove the cryptocurrency from the portfolio
+    if (amount === 0) {
+        portfolio = portfolio.filter((coin) => coin.id !== cryptoId);
+        alert(`${cryptoName} has been removed from your portfolio.`);
+    } else if (amount > 0) {
+        // Update existing or add new entry
         const existingCoin = portfolio.find((coin) => coin.id === cryptoId);
         if (existingCoin) {
-            existingCoin.holdings = amount; // Update existing holdings
+            existingCoin.holdings = amount;
         } else {
-            portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount }); // Add new entry
+            portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
         }
-        displayPortfolio();
     } else {
-        alert("Please enter a valid amount greater than 0.");
+        alert("Please enter a valid amount (greater than 0 or 0 to remove).");
     }
+
+    displayPortfolio();
 });
 
 // Initialize Portfolio

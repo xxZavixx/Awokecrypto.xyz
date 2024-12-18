@@ -13,6 +13,17 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">AwokeCrypto</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -20,11 +31,12 @@
     <section class="ens-minting-section py-5">
         <div class="container text-center">
             <h1>Mint Your ENS Subdomain</h1>
-            <p>Claim your personalized subdomain under <strong>awokecrypto.eth</strong>.</p>
+            <p>Claim your personalized subdomain under <strong>awokecrypto.eth</strong> on the Base chain.</p>
             <p class="text-warning">
-                If you are using Coinbase Wallet, open this page in the <strong>Coinbase Wallet browser</strong> for a seamless minting experience. 
-                Alternatively, use MetaMask or another supported wallet.
+                If you are using Coinbase Wallet, please open this page in the <strong>Coinbase Wallet browser</strong> for a seamless minting experience. Alternatively, use MetaMask or any supported wallet connected to the Base network.
             </p>
+
+            <!-- Subdomain Input Form -->
             <form id="ensMintForm" class="mt-4">
                 <div class="mb-3">
                     <label for="subdomain" class="form-label">Enter Desired Subdomain</label>
@@ -34,8 +46,17 @@
                     <p>Full Subdomain Preview: <strong id="preview">[your-subdomain].awokecrypto.eth</strong></p>
                 </div>
 
-                <!-- Namespace Minting Widget -->
-                <div id="namespace-widget-container"></div>
+                <!-- Namespace Widget Container -->
+                <div id="namespace-widget-container">
+                    <!-- Namespace Minting Widget -->
+                    <script
+                        defer
+                        id="namespace-widget" 
+                        widgetId="0xb0cdb050537dd832d4b6a0813ea344a90be9083e6b01deacb2e541dcdc1bfff4"
+                        type="module"
+                        src="https://namespace.fra1.digitaloceanspaces.com/widget/latest/bundle.js">
+                    </script>
+                </div>
             </form>
         </div>
     </section>
@@ -47,14 +68,7 @@
         </div>
     </footer>
 
-    <!-- Namespace Widget Script -->
-    <script
-      defer 
-      id="namespace-widget" 
-      widgetId="0xb0cdb050537dd832d4b6a0813ea344a90be9083e6b01deacb2e541dcdc1bfff4" 
-      type="module" 
-      src="https://namespace.fra1.digitaloceanspaces.com/widget/latest/bundle.js">
-    </script>
+    <!-- Bootstrap and Custom JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="main.js"></script>
 </body>

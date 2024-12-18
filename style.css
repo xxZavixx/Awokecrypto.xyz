@@ -1,0 +1,24 @@
+.ens-minting-section {
+    background: linear-gradient(135deg, #1a1a1a, #343a40);
+    color: #fff;
+    padding: 60px 0;
+}
+
+.ens-minting-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+#mintButton {
+    background: #00c09d;
+    border: none;
+    transition: background 0.3s;
+}
+
+#mintButton:hover {
+    background: #007a65;
+}
+
+#availability {
+    font-weight: bold;
+}

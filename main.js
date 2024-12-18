@@ -73,3 +73,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const disconnectBtn = document.getElementById("disconnectWallet");
+
+    disconnectBtn.addEventListener("click", async () => {
+        try {
+            // Clear any local session data
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // Notify the user
+            alert("Wallet disconnected. Please refresh the page to reconnect.");
+            
+            // Reload the page to reset any wallet state
+            window.location.reload();
+        } catch (error) {
+            console.error("Error disconnecting wallet:", error);
+            alert("An error occurred while disconnecting. Please try again.");
+        }
+    });
+});

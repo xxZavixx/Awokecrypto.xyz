@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AwokeCrypto - Personal Crypto Journey and ENS Subdomain Minting">
     <title>AwokeCrypto</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -11,68 +10,59 @@
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="#">AwokeCrypto</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="ens-mint.html">ENS Mint</a></li>
-                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                </ul>
-            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero-section text-center text-light d-flex flex-column align-items-center justify-content-center">
+    <header class="hero-section">
         <div class="container">
-            <h1 class="display-4">Welcome to AwokeCrypto</h1>
-            <p class="lead">Your gateway to cryptocurrency and ENS innovation.</p>
-            <a href="ens-mint.html" class="btn btn-primary btn-lg mt-3">Mint Your ENS Subdomain</a>
+            <h1>Welcome to AwokeCrypto</h1>
+            <p>Your gateway to cryptocurrency and ENS innovation.</p>
+            <a href="ens-mint.html" class="btn btn-primary">Mint Your ENS Subdomain</a>
         </div>
     </header>
 
     <!-- About Section -->
-    <section id="about" class="py-5 bg-light">
-        <div class="container text-center">
+    <section id="about">
+        <div class="container">
             <h2>About Me</h2>
-            <p>I'm passionate about cryptocurrency and blockchain technology. AwokeCrypto is my platform to share insights, tools, and resources for navigating the digital asset space.</p>
+            <p>
+                I'm passionate about cryptocurrency and blockchain technology. AwokeCrypto is my platform 
+                to share insights, tools, and resources for navigating the digital asset space.
+            </p>
         </div>
     </section>
 
-    <!-- Feature Highlights -->
-    <section class="features py-5">
+    <!-- Features Section -->
+    <section class="features">
         <div class="container">
-            <h2 class="text-center mb-4">Explore AwokeCrypto</h2>
+            <h2>Explore AwokeCrypto</h2>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="feature-card text-center p-4 border rounded">
-                        <i class="fas fa-coins fa-3x mb-3"></i>
+                    <div class="feature-card">
+                        <i class="fas fa-coins fa-3x"></i>
                         <h4>Mint ENS Subdomains</h4>
-                        <p>Claim your personalized subdomain under <strong>awokecrypto.eth</strong> on the Base network.</p>
-                        <a href="ens-mint.html" class="btn btn-outline-primary">Start Minting</a>
+                        <p>Claim your personalized subdomain under awokecrypto.eth.</p>
+                        <a href="ens-mint.html">Start Minting</a>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="feature-card text-center p-4 border rounded">
-                        <i class="fas fa-chart-line fa-3x mb-3"></i>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line fa-3x"></i>
                         <h4>Crypto Portfolio</h4>
-                        <p>Stay updated with real-time charts and insights into your favorite tokens.</p>
-                        <a href="portfolio.html" class="btn btn-outline-primary">View Portfolio</a>
+                        <p>Stay updated with real-time charts and insights.</p>
+                        <a href="portfolio.html">View Portfolio</a>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="feature-card text-center p-4 border rounded">
-                        <i class="fas fa-pencil-alt fa-3x mb-3"></i>
+                    <div class="feature-card">
+                        <i class="fas fa-pencil-alt fa-3x"></i>
                         <h4>Crypto Blog</h4>
-                        <p>Discover educational articles, tips, and market insights from the crypto world.</p>
-                        <a href="blog.html" class="btn btn-outline-primary">Read Articles</a>
+                        <p>Discover tips, market trends, and more.</p>
+                        <a href="blog.html">Read Articles</a>
                     </div>
                 </div>
             </div>
@@ -80,19 +70,10 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light py-4">
-        <div class="container text-center">
-            <p>&copy; 2024 AwokeCrypto. All Rights Reserved.</p>
-            <p>
-                Follow us: 
-                <a href="#" class="text-light mx-2"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-light mx-2"><i class="fab fa-github"></i></a>
-                <a href="#" class="text-light mx-2"><i class="fab fa-linkedin"></i></a>
-            </p>
-        </div>
+    <footer>
+        <p>&copy; 2024 AwokeCrypto. All Rights Reserved.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="main.js"></script>
 </body>
 </html>

@@ -9,6 +9,15 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <style>
+        .chart-instruction {
+            color: #ccc; /* Light gray for better visibility */
+            font-size: 0.9rem;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -81,7 +90,9 @@
         <!-- Search and Chart Section -->
         <div class="mt-5">
             <h3 class="text-center">Crypto Data Chart</h3>
-            <p class="text-center text-muted">Search by cryptocurrency name (e.g., "Bitcoin") or symbol (e.g., "BTC").</p>
+            <p class="chart-instruction">
+                Search by cryptocurrency name (e.g., "Bitcoin") or symbol (e.g., "BTC").
+            </p>
             <form id="search-form" class="row justify-content-center mb-4">
                 <div class="col-md-6 mb-2">
                     <input type="text" id="search-input" class="form-control" placeholder="Search for a cryptocurrency">

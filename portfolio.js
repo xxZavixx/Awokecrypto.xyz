@@ -10,6 +10,19 @@ const cryptoChart = document.getElementById("crypto-chart");
 const MAX_FREE_TRACKING = 10;
 let isPaidUser = localStorage.getItem("isPaidUser") === "true";
 const coingeckoApiUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1";
+const coingeckoCoinListUrl = "https://api.coingecko.com/api/v3/coins/list"; // Fetch all supported cryptos
+
+let coinList = [];
+
+// Fetch the list of all coins from CoinGecko
+async function fetchCoinList() {
+    try {
+        const response = await fetch(coingeckoCoinListUrl);
+        coinList = await response.json();
+    } catch (error) {
+        console.error("Error fetching CoinGecko coin list:", error);
+    }
+}
 
 // Populate Dropdown with Crypto Names
 async function populateDropdown() {
@@ -66,11 +79,28 @@ searchForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const searchTerm = searchInput.value.trim().toLowerCase();
 
-    const response = await fetch(`https://api.coingecko.com/api/v3/coins/${searchTerm}/market_chart?vs_currency=usd&days=7`);
-    if (!response.ok) {
-        alert("Invalid cryptocurrency search. Please try again.");
+    // Map user input to the correct CoinGecko ID
+    const matchedCoin = coinList.find(
+        (coin) =>
+            coin.name.toLowerCase() === searchTerm || // Match by name
+            coin.symbol.toLowerCase() === searchTerm // Match by symbol
+    );
+
+    if (!matchedCoin) {
+        alert("Cryptocurrency not found. Please try again.");
         return;
     }
+
+    // Fetch 7-day price data for the matched coin
+    const response = await fetch(
+        `https://api.coingecko.com/api/v3/coins/${matchedCoin.id}/market_chart?vs_currency=usd&days=7`
+    );
+
+    if (!response.ok) {
+        alert("Failed to fetch chart data. Please try again.");
+        return;
+    }
+
     const data = await response.json();
 
     const labels = data.prices.map(([timestamp]) => new Date(timestamp).toLocaleDateString());
@@ -83,7 +113,7 @@ searchForm.addEventListener("submit", async (e) => {
             labels,
             datasets: [
                 {
-                    label: `Price (7 days)`,
+                    label: `${matchedCoin.name} Price (7 days)`,
                     data: prices,
                     borderColor: "rgba(0, 200, 255, 1)",
                     backgroundColor: "rgba(0, 200, 255, 0.1)",
@@ -96,6 +126,7 @@ searchForm.addEventListener("submit", async (e) => {
 
 // Initialize
 (async () => {
+    await fetchCoinList();
     await populateDropdown();
     await displayPortfolio();
 })();

@@ -9,8 +9,11 @@ const cryptoChart = document.getElementById("crypto-chart");
 const chartLoader = document.getElementById("chart-loader");
 
 const MAX_FREE_TRACKING = 10;
+const PAYMENT_SUCCESS_QUERY = "payment_success=true";
 let isPaidUser = localStorage.getItem("isPaidUser") === "true";
-const coingeckoApiUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1";
+
+const coingeckoApiUrl =
+    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1";
 const coingeckoCoinListUrl = "https://api.coingecko.com/api/v3/coins/list";
 
 let coinList = [];
@@ -176,9 +179,23 @@ form.addEventListener("submit", (e) => {
     displayPortfolio();
 });
 
+// Check for Payment Confirmation in URL
+function checkPaymentStatus() {
+    const queryParams = new URLSearchParams(window.location.search);
+    if (queryParams.has("payment_success")) {
+        localStorage.setItem("isPaidUser", "true");
+        isPaidUser = true;
+        alert("Payment confirmed! All features are now unlocked.");
+        queryParams.delete("payment_success");
+        window.history.replaceState(null, null, window.location.pathname);
+    }
+}
+
 // Initialize
 (async () => {
+    checkPaymentStatus();
     await fetchCoinList();
     await populateDropdown();
     await displayPortfolio();
 })();
+

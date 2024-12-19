@@ -29,7 +29,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="ens-mint.html">ENS Mint</a></li>
-                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="portfolio.html">Portfolio</a></li>
                     <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>
@@ -46,7 +46,7 @@
         <form id="update-portfolio-form" class="row justify-content-center mb-4">
             <div class="col-md-4 mb-2">
                 <select id="crypto-name" class="form-select">
-                    <!-- Dropdown will populate dynamically -->
+                    <!-- Dynamically Populated -->
                 </select>
             </div>
             <div class="col-md-4 mb-2">
@@ -74,8 +74,8 @@
         <h3 class="text-center" id="total-value">Total Portfolio Value: $0.00</h3>
 
         <p class="text-center mt-4">
-            Need to track or search more than 10 cryptos? 
-            <a href="https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725" class="text-info" id="payment-link" target="_blank">Upgrade for $5/month</a>
+            Need to track more than 10 cryptos? 
+            <a href="https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725" class="text-info" target="_blank">Upgrade for $5/month</a>
         </p>
 
         <!-- Search and Chart Section -->
@@ -99,5 +99,6 @@
     </footer>
 
     <script src="portfolio.js?v=1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>

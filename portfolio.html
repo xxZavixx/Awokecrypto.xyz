@@ -74,9 +74,23 @@
         <h3 class="text-center" id="total-value">Total Portfolio Value: $0.00</h3>
 
         <p class="text-center mt-4">
-            Need to track more than 10 cryptos? 
-            <a href="payment.html" class="text-info" id="payment-link">Upgrade for $5/month</a>
+            Need to track or search more than 10 cryptos? 
+            <a href="https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725" class="text-info" id="payment-link" target="_blank">Upgrade for $5/month</a>
         </p>
+
+        <!-- Search and Chart Section -->
+        <div class="mt-5">
+            <h3 class="text-center">Crypto Data Chart</h3>
+            <form id="search-form" class="row justify-content-center mb-4">
+                <div class="col-md-6 mb-2">
+                    <input type="text" id="search-input" class="form-control" placeholder="Search for a cryptocurrency">
+                </div>
+                <div class="col-md-2 mb-2">
+                    <button type="submit" class="btn btn-success w-100">Search</button>
+                </div>
+            </form>
+            <canvas id="crypto-chart" width="400" height="200"></canvas>
+        </div>
     </section>
 
     <!-- Footer -->

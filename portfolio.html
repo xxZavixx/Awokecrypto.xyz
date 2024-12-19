@@ -26,7 +26,8 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="ens-mint.html">ENS Mint</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>
             </div>
@@ -38,21 +39,29 @@
         <h1 class="text-center mb-4">My Crypto Portfolio</h1>
         <p class="text-center">Live portfolio values fetched from CoinGecko. Update your holdings below.</p>
 
-        <!-- Search for Crypto -->
-        <div class="mb-4">
-            <input type="text" id="crypto-search" class="form-control" placeholder="Search for a cryptocurrency...">
-            <button onclick="searchCrypto()" class="btn btn-primary mt-2">Search</button>
+        <!-- Search Input -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <input 
+                    type="text" 
+                    id="crypto-search" 
+                    class="form-control" 
+                    placeholder="Search for a cryptocurrency">
+            </div>
         </div>
 
         <!-- Form to Update Holdings -->
         <form id="update-portfolio-form" class="row justify-content-center mb-4">
             <div class="col-md-4 mb-2">
-                <select id="crypto-name" class="form-select">
-                    <option value="">Select a cryptocurrency</option>
-                </select>
+                <select id="crypto-name" class="form-select"></select>
             </div>
             <div class="col-md-4 mb-2">
-                <input type="number" id="crypto-amount" class="form-control" placeholder="Enter amount" min="0">
+                <input 
+                    type="number" 
+                    id="crypto-amount" 
+                    class="form-control" 
+                    placeholder="Enter amount" 
+                    min="0">
             </div>
             <div class="col-md-2 mb-2">
                 <button type="submit" class="btn btn-primary w-100">Update Holdings</button>
@@ -77,9 +86,9 @@
 
         <p class="text-center mt-4">
             Need to track more than 10 cryptos? 
-            <a href="https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725" class="text-info" target="_blank" id="upgrade-link">
-                Upgrade for $5/month
-            </a>
+            <a href="https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725" 
+               class="text-info" target="_blank" 
+               onclick="setPaidUserStatus()">Upgrade for $5/month</a>
         </p>
     </section>
 

@@ -81,6 +81,7 @@
         <!-- Search and Chart Section -->
         <div class="mt-5">
             <h3 class="text-center">Crypto Data Chart</h3>
+            <p class="text-center text-muted">Search by cryptocurrency name (e.g., "Bitcoin") or symbol (e.g., "BTC").</p>
             <form id="search-form" class="row justify-content-center mb-4">
                 <div class="col-md-6 mb-2">
                     <input type="text" id="search-input" class="form-control" placeholder="Search for a cryptocurrency">
@@ -89,7 +90,14 @@
                     <button type="submit" class="btn btn-success w-100">Search</button>
                 </div>
             </form>
-            <canvas id="crypto-chart" width="400" height="200"></canvas>
+
+            <!-- Chart Container -->
+            <div class="text-center">
+                <canvas id="crypto-chart" width="400" height="200" style="display: none;"></canvas>
+                <div id="chart-loader" class="spinner-border text-primary" role="status" style="display: none;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
         </div>
     </section>
 

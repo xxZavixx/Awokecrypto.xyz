@@ -3,50 +3,38 @@ const tableBody = document.getElementById("portfolio-table-body");
 const totalValueElement = document.getElementById("total-value");
 const form = document.getElementById("update-portfolio-form");
 const cryptoNameSelect = document.getElementById("crypto-name");
-const searchInput = document.getElementById("crypto-search");
+const cryptoSearch = document.getElementById("crypto-search");
 
 const MAX_FREE_TRACKING = 10;
 let isPaidUser = localStorage.getItem("isPaidUser") === "true";
-let availableCryptos = []; // All fetched cryptos
 
-// Fetch Top 10 Cryptos for Free Users
-const TOP_10_CRYPTO_IDS = [
-    "bitcoin", "ethereum", "cardano", "ripple", "litecoin", 
-    "dogecoin", "polkadot", "binancecoin", "solana", "tron"
-];
-
-// Fetch Crypto Prices from CoinGecko
+// Fetch Crypto Prices
 async function fetchCryptoPrices() {
     try {
         const response = await fetch(
             "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1"
         );
-        const data = await response.json();
-        availableCryptos = data;
-        return data;
+        return await response.json();
     } catch (error) {
         console.error("Error fetching prices:", error);
         return null;
     }
 }
 
-// Filter Cryptos for Free Users
-function getAllowedCryptos() {
-    if (isPaidUser) return availableCryptos;
-    return availableCryptos.filter(crypto => TOP_10_CRYPTO_IDS.includes(crypto.id));
+// Populate Crypto Dropdown
+async function populateDropdown() {
+    const cryptos = await fetchCryptoPrices();
+    if (!cryptos) return;
+
+    cryptos.slice(0, isPaidUser ? 100 : MAX_FREE_TRACKING).forEach((crypto) => {
+        const option = document.createElement("option");
+        option.value = crypto.id;
+        option.textContent = crypto.name;
+        cryptoNameSelect.appendChild(option);
+    });
 }
 
-// Populate Search Suggestions
-function populateSearchResults(searchValue) {
-    const allowedCryptos = getAllowedCryptos();
-    const results = allowedCryptos
-        .filter(crypto => crypto.name.toLowerCase().includes(searchValue.toLowerCase()))
-        .map(crypto => crypto.name);
-
-    alert(`Results: ${results.length ? results.join(", ") : "No results found"}`);
-}
-
-// Display Portfolio Table
+// Display Portfolio
 async function displayPortfolio() {
     const prices = await fetchCryptoPrices();
     if (!prices) {
@@ -78,58 +66,58 @@ async function displayPortfolio() {
     localStorage.setItem("portfolio", JSON.stringify(portfolio));
 }
 
-// Check Payment Status
-function checkPaymentStatus() {
-    if (portfolio.length >= MAX_FREE_TRACKING && !isPaidUser) {
-        alert("You've reached the free limit of 10 cryptos. Upgrade for $5/month to track more.");
-        window.open("https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725", "_blank");
-        return false;
-    }
-    return true;
-}
-
-// Handle Form Submission
+// Update Holdings
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const cryptoId = cryptoNameSelect.value.toLowerCase();
+
+    const cryptoId = cryptoNameSelect.value;
     const cryptoName = cryptoNameSelect.options[cryptoNameSelect.selectedIndex].text;
     const amount = parseFloat(document.getElementById("crypto-amount").value);
 
-    const allowedCryptos = getAllowedCryptos();
-    if (!allowedCryptos.find(c => c.id === cryptoId)) {
-        alert("This cryptocurrency is not available for free users.");
+    const existingCoin = portfolio.find((coin) => coin.id === cryptoId);
+
+    // Check payment status if adding a new entry
+    if (!existingCoin && portfolio.length >= MAX_FREE_TRACKING && !isPaidUser) {
+        alert("You've reached the free limit of 10 cryptos. Upgrade for $5/month to track more.");
+        redirectToPayment();
         return;
     }
 
-    if (!checkPaymentStatus()) return;
-
-    // Update or Remove Entry
-    const existingCoin = portfolio.find((coin) => coin.id === cryptoId);
+    // Remove if holdings are 0
     if (amount === 0) {
         portfolio = portfolio.filter((coin) => coin.id !== cryptoId);
         alert(`${cryptoName} has been removed from your portfolio.`);
     } else if (amount > 0) {
-        if (existingCoin) existingCoin.holdings = amount;
-        else portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
+        // Update existing or add new
+        if (existingCoin) {
+            existingCoin.holdings = amount;
+        } else {
+            portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
+        }
+    } else {
+        alert("Please enter a valid amount (0 to remove or greater than 0 to update).");
     }
 
     displayPortfolio();
 });
 
-// Search Input Listener
-searchInput.addEventListener("input", (e) => {
-    populateSearchResults(e.target.value);
-});
-
-// Manual Payment Confirmation Simulation
+// Payment Confirmation
 function setPaidUserStatus() {
     localStorage.setItem("isPaidUser", "true");
     alert("Payment successful! You can now track unlimited cryptos.");
-    displayPortfolio();
+    location.reload(); // Refresh the page
 }
 
-// Initialize Portfolio
+// Redirect to Payment
+function redirectToPayment() {
+    window.open("https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725", "_blank");
+    setTimeout(() => {
+        alert("After completing the payment, return to this page and reload to unlock unlimited tracking.");
+    }, 1000);
+}
+
+// Initialize
 (async () => {
-    await fetchCryptoPrices();
-    displayPortfolio();
+    await populateDropdown();
+    await displayPortfolio();
 })();

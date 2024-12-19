@@ -67,6 +67,10 @@ searchForm.addEventListener("submit", async (e) => {
     const searchTerm = searchInput.value.trim().toLowerCase();
 
     const response = await fetch(`https://api.coingecko.com/api/v3/coins/${searchTerm}/market_chart?vs_currency=usd&days=7`);
+    if (!response.ok) {
+        alert("Invalid cryptocurrency search. Please try again.");
+        return;
+    }
     const data = await response.json();
 
     const labels = data.prices.map(([timestamp]) => new Date(timestamp).toLocaleDateString());

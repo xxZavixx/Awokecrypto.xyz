@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Crypto Portfolio | AwokeCrypto</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -26,7 +29,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="ens-mint.html">ENS Mint</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
                     <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>
@@ -39,13 +42,11 @@
         <h1 class="text-center mb-4">My Crypto Portfolio</h1>
         <p class="text-center">Live portfolio values fetched from CoinGecko. Update your holdings below.</p>
 
-        <!-- Form to Search and Update Holdings -->
+        <!-- Form to Update Holdings -->
         <form id="update-portfolio-form" class="row justify-content-center mb-4">
             <div class="col-md-4 mb-2">
-                <input type="text" id="crypto-search" class="form-control" placeholder="Search Crypto">
-                <button type="button" id="search-button" class="btn btn-outline-primary mt-2 w-100">Search</button>
-                <select id="crypto-name" class="form-select mt-2">
-                    <!-- Dynamically Populated -->
+                <select id="crypto-name" class="form-select">
+                    <!-- Dropdown will populate dynamically -->
                 </select>
             </div>
             <div class="col-md-4 mb-2">
@@ -74,8 +75,7 @@
 
         <p class="text-center mt-4">
             Need to track more than 10 cryptos? 
-            <a href="https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725" 
-               class="text-info">Upgrade for $5/month</a>
+            <a href="payment.html" class="text-info" id="payment-link">Upgrade for $5/month</a>
         </p>
     </section>
 
@@ -84,8 +84,6 @@
         <p class="mb-0">&copy; 2024 AwokeCrypto. All Rights Reserved.</p>
     </footer>
 
-    <!-- Bootstrap and JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="portfolio.js"></script>
+    <script src="portfolio.js?v=1.0"></script>
 </body>
 </html>

@@ -26,7 +26,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="ens-mint.html">ENS Mint</a></li>
-                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="portfolio.html">Portfolio</a></li>
                     <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>
@@ -39,29 +39,17 @@
         <h1 class="text-center mb-4">My Crypto Portfolio</h1>
         <p class="text-center">Live portfolio values fetched from CoinGecko. Update your holdings below.</p>
 
-        <!-- Search Input -->
-        <div class="row justify-content-center mb-4">
-            <div class="col-md-6">
-                <input 
-                    type="text" 
-                    id="crypto-search" 
-                    class="form-control" 
-                    placeholder="Search for a cryptocurrency">
-            </div>
-        </div>
-
-        <!-- Form to Update Holdings -->
+        <!-- Form to Search and Update Holdings -->
         <form id="update-portfolio-form" class="row justify-content-center mb-4">
             <div class="col-md-4 mb-2">
-                <select id="crypto-name" class="form-select"></select>
+                <input type="text" id="crypto-search" class="form-control" placeholder="Search Crypto">
+                <button type="button" id="search-button" class="btn btn-outline-primary mt-2 w-100">Search</button>
+                <select id="crypto-name" class="form-select mt-2">
+                    <!-- Dynamically Populated -->
+                </select>
             </div>
             <div class="col-md-4 mb-2">
-                <input 
-                    type="number" 
-                    id="crypto-amount" 
-                    class="form-control" 
-                    placeholder="Enter amount" 
-                    min="0">
+                <input type="number" id="crypto-amount" class="form-control" placeholder="Enter amount" min="0">
             </div>
             <div class="col-md-2 mb-2">
                 <button type="submit" class="btn btn-primary w-100">Update Holdings</button>
@@ -87,8 +75,7 @@
         <p class="text-center mt-4">
             Need to track more than 10 cryptos? 
             <a href="https://commerce.coinbase.com/checkout/a8ec3794-d2e1-4f0b-800e-0622922bb725" 
-               class="text-info" target="_blank" 
-               onclick="setPaidUserStatus()">Upgrade for $5/month</a>
+               class="text-info">Upgrade for $5/month</a>
         </p>
     </section>
 
@@ -97,6 +84,8 @@
         <p class="mb-0">&copy; 2024 AwokeCrypto. All Rights Reserved.</p>
     </footer>
 
+    <!-- Bootstrap and JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="portfolio.js"></script>
 </body>
 </html>

@@ -2,33 +2,28 @@ let portfolio = JSON.parse(localStorage.getItem("portfolio")) || [];
 const tableBody = document.getElementById("portfolio-table-body");
 const totalValueElement = document.getElementById("total-value");
 const form = document.getElementById("update-portfolio-form");
-const cryptoSearch = document.getElementById("crypto-search");
 const cryptoNameSelect = document.getElementById("crypto-name");
-const searchButton = document.getElementById("search-button");
 
 const MAX_FREE_TRACKING = 10;
 let isPaidUser = localStorage.getItem("isPaidUser") === "true";
+const coingeckoApiUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1";
 
-// Fetch Crypto Prices
-async function fetchCryptoPrices(perPage = 100) {
+// Fetch Crypto Prices and Names
+async function fetchCryptoData() {
     try {
-        const response = await fetch(
-            `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${perPage}&page=1`
-        );
+        const response = await fetch(coingeckoApiUrl);
         return await response.json();
     } catch (error) {
-        console.error("Error fetching prices:", error);
-        return null;
+        console.error("Error fetching crypto data:", error);
+        return [];
     }
 }
 
-// Populate Dropdown with Top 100 Cryptos
+// Populate Dropdown with Crypto Names
 async function populateDropdown() {
-    const prices = await fetchCryptoPrices();
-    if (!prices) return;
-
-    cryptoNameSelect.innerHTML = ""; // Clear previous options
-    prices.forEach((crypto) => {
+    const cryptos = await fetchCryptoData();
+    cryptoNameSelect.innerHTML = ""; // Clear existing options
+    cryptos.forEach((crypto) => {
         const option = document.createElement("option");
         option.value = crypto.id;
         option.textContent = crypto.name;
@@ -38,8 +33,8 @@ async function populateDropdown() {
 
 // Display Portfolio
 async function displayPortfolio() {
-    const prices = await fetchCryptoPrices(isPaidUser ? 5000 : 100); // Show more cryptos for paid users
-    if (!prices) {
+    const prices = await fetchCryptoData();
+    if (!prices.length) {
         totalValueElement.textContent = "Failed to load portfolio. Please try again.";
         return;
     }
@@ -48,7 +43,8 @@ async function displayPortfolio() {
     let totalValue = 0;
 
     portfolio.forEach((coin, index) => {
-        if (index >= MAX_FREE_TRACKING && !isPaidUser) return; // Restrict to 10 cryptos for free users
+        // Restrict free users to 10 cryptos
+        if (index >= MAX_FREE_TRACKING && !isPaidUser) return;
 
         const priceData = prices.find((crypto) => crypto.id === coin.id);
         const price = priceData ? priceData.current_price : 0;
@@ -78,42 +74,41 @@ form.addEventListener("submit", (e) => {
     const cryptoName = cryptoNameSelect.options[cryptoNameSelect.selectedIndex].text;
     const amount = parseFloat(document.getElementById("crypto-amount").value);
 
-    if (!isPaidUser && portfolio.length >= MAX_FREE_TRACKING) {
-        alert("You've reached the free limit of 10 cryptos. Please upgrade to track more.");
-        return;
-    }
-
     const existingCoin = portfolio.find((coin) => coin.id === cryptoId);
 
+    // Check payment status if adding a new entry
+    if (!existingCoin && !checkPaymentStatus()) return;
+
+    // Remove if holdings are 0
     if (amount === 0) {
         portfolio = portfolio.filter((coin) => coin.id !== cryptoId);
-        alert(`${cryptoName} removed from your portfolio.`);
+        alert(`${cryptoName} has been removed from your portfolio.`);
     } else if (amount > 0) {
+        // Update existing or add new
         if (existingCoin) {
             existingCoin.holdings = amount;
         } else {
             portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
         }
+    } else {
+        alert("Please enter a valid amount (0 to remove or greater than 0 to update).");
     }
 
     displayPortfolio();
 });
 
-// Search Button Functionality
-searchButton.addEventListener("click", async () => {
-    const searchTerm = cryptoSearch.value.toLowerCase();
-    const allCryptos = await fetchCryptoPrices(isPaidUser ? 5000 : 100);
-    const results = allCryptos.filter((crypto) => crypto.name.toLowerCase().includes(searchTerm));
-    
-    if (results.length > 0) {
-        alert(`Results: ${results.map((crypto) => crypto.name).join(", ")}`);
-    } else {
-        alert("No results found. Please try another search term.");
+// Payment Check
+function checkPaymentStatus() {
+    if (portfolio.length >= MAX_FREE_TRACKING && !isPaidUser) {
+        alert("You've reached the free limit of 10 cryptos. Upgrade for $5/month to track more.");
+        window.location.href = "payment.html";
+        return false;
     }
-});
+    return true;
+}
 
-// Initialize App
+// Initialize Portfolio
 (async () => {
     await populateDropdown();
-    await displayPortfolio();
+    displayPortfolio();
 })();

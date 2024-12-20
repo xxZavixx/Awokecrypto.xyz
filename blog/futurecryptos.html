@@ -3,37 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Best Cryptos for the Future</title>
+    <title>Future Cryptos | AwokeCrypto</title>
     <link rel="stylesheet" href="../style.css">
-    <style>
-        body {
-            font-family: 'Orbitron', sans-serif;
-            background-color: #0a0a0a;
-            color: #ffffff;
-            line-height: 1.6;
-        }
-        .crypto-section {
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            background-color: #141414;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
-        }
-        .crypto-section h2 {
-            color: #00d4ff;
-            margin-bottom: 10px;
-        }
-        .crypto-section a {
-            color: #00d4ff;
-            text-decoration: none;
-        }
-        .crypto-section a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
 </head>
 <body>
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="../index.html">AwokeCrypto</a>
@@ -44,77 +19,45 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="../ens-mint.html">ENS Mint</a></li>
-                    <li class="nav-item"><a class="nav-link" href="wallets.html">Wallets</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="futurecryptos.html">Best Cryptos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../portfolio.html">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="../contact.html">Contact</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <header class="hero-section">
-        <div class="container text-center py-5">
-            <h1>Best Cryptos for the Future</h1>
-            <p>Discover the cryptocurrencies that could shape the future of finance and technology.</p>
+    <!-- Main Content -->
+    <section class="container py-5">
+        <h1 class="text-center mb-5">Best Cryptos for the Future</h1>
+        <p class="text-center mb-4">
+            Explore the top cryptocurrencies poised for growth and innovation. Click on each cryptocurrency name below to learn more about its unique features and official website.
+        </p>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>XRP</h3>
+                <p><a href="https://ripple.com/xrp/" target="_blank">Click here</a> to explore XRP, a digital asset designed for global payments and real-time settlement.</p>
+                <h3>XLM (Stellar Lumens)</h3>
+                <p><a href="https://www.stellar.org/" target="_blank">Click here</a> to learn about Stellar, a blockchain-based platform for cross-border payments.</p>
+                <h3>XDC</h3>
+                <p><a href="https://xdc.org/" target="_blank">Click here</a> to understand XDC, a blockchain network optimized for global trade and finance.</p>
+                <h3>SHX (Stronghold Token)</h3>
+                <p><a href="https://stronghold.co/" target="_blank">Click here</a> to discover SHX, a token focused on financial infrastructure and digital payments.</p>
+            </div>
+            <div class="col-md-6">
+                <h3>HBAR (Hedera Hashgraph)</h3>
+                <p><a href="https://hedera.com/" target="_blank">Click here</a> to learn about Hedera, a high-performance public ledger for decentralized applications.</p>
+                <h3>ALGO (Algorand)</h3>
+                <p><a href="https://www.algorand.com/" target="_blank">Click here</a> to understand Algorand, a blockchain platform known for scalability and security.</p>
+                <h3>VELO (Velo Labs)</h3>
+                <p><a href="https://veloprotocol.io/" target="_blank">Click here</a> to explore Velo, a financial protocol enabling cross-border asset transfers.</p>
+                <h3>HASH (Provenance Blockchain)</h3>
+                <p><a href="https://provenance.io/" target="_blank">Click here</a> to explore HASH, a blockchain designed for financial services and asset management.</p>
+            </div>
         </div>
-    </header>
+    </section>
 
-    <main class="container py-5">
-        <!-- XRP -->
-        <section class="crypto-section">
-            <h2><a href="https://ripple.com/xrp/" target="_blank">XRP</a></h2>
-            <p>XRP, developed by Ripple, is designed for seamless global transactions and aims to revolutionize cross-border payments.</p>
-        </section>
-
-        <!-- XLM -->
-        <section class="crypto-section">
-            <h2><a href="https://www.stellar.org/" target="_blank">XLM</a></h2>
-            <p>Stellar's XLM facilitates quick and cost-effective cross-border payments, making it a favorite for financial institutions.</p>
-        </section>
-
-        <!-- XDC -->
-        <section class="crypto-section">
-            <h2><a href="https://xdc.org/" target="_blank">XDC</a></h2>
-            <p>XDC is focused on blockchain solutions for global trade and finance, aiming to streamline operations and reduce costs.</p>
-        </section>
-
-        <!-- SHX -->
-        <section class="crypto-section">
-            <h2><a href="https://stronghold.co/" target="_blank">SHX</a></h2>
-            <p>Stronghold Token (SHX) offers financial inclusion and interoperability within the digital economy.</p>
-        </section>
-
-        <!-- HBAR -->
-        <section class="crypto-section">
-            <h2><a href="https://hedera.com/" target="_blank">HBAR</a></h2>
-            <p>Hedera Hashgraph's HBAR provides a highly secure and scalable platform for enterprise-grade applications.</p>
-        </section>
-
-        <!-- ALGO -->
-        <section class="crypto-section">
-            <h2><a href="https://www.algorand.com/" target="_blank">ALGO</a></h2>
-            <p>Algorand offers a highly scalable and eco-friendly blockchain platform with fast transaction speeds.</p>
-        </section>
-
-        <!-- VELO -->
-        <section class="crypto-section">
-            <h2><a href="https://www.velo.org/" target="_blank">VELO</a></h2>
-            <p>VELO, built on the Stellar blockchain, focuses on bridging traditional finance with blockchain-based solutions.</p>
-        </section>
-
-        <!-- SHIB -->
-        <section class="crypto-section">
-            <h2><a href="https://shibatoken.com/" target="_blank">SHIB</a></h2>
-            <p>Shiba Inu (SHIB) started as a meme coin but has grown into an ecosystem of decentralized projects and utilities.</p>
-        </section>
-
-        <!-- HASH -->
-        <section class="crypto-section">
-            <h2><a href="https://provenance.io/" target="_blank">HASH</a></h2>
-            <p>HASH powers the Provenance Blockchain, designed for financial services, offering transparency and efficiency.</p>
-        </section>
-    </main>
-
+    <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3">
         <p class="mb-0">&copy; 2024 AwokeCrypto. All Rights Reserved.</p>
     </footer>

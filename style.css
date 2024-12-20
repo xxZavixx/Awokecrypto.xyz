@@ -69,24 +69,23 @@ body {
 /* Features Section */
 .features {
     padding: 60px 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
-    justify-items: center; /* Center-align cards */
-    text-align: center;
+    justify-content: center;
 }
 
 .feature-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.8);
+    display: block;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.9);
     color: #ffffff;
     padding: 30px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
     width: 300px;
+    max-width: 100%;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     text-decoration: none;
 }
@@ -94,7 +93,7 @@ body {
 .feature-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
 }
 
 .feature-card i {
@@ -113,6 +112,19 @@ body {
 .feature-card p {
     font-size: 1rem;
     color: #cccccc;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .features {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .feature-card {
+        width: 100%;
+        max-width: none;
+    }
 }
 
 /* Portfolio Section */

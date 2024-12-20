@@ -14,69 +14,67 @@ const coingeckoCoinListUrl = "https://api.coingecko.com/api/v3/coins/list";
 
 let coinList = [];
 
-// Fetch the list of all coins from CoinGecko
-async function fetchCoinList() {
-    try {
-        const response = await fetch(coingeckoCoinListUrl);
-        coinList = await response.json();
-    } catch (error) {
-        console.error("Error fetching CoinGecko coin list:", error);
-    }
-}
-
-// Populate Dropdown with retry logic
-async function populateDropdown() {
-    const maxRetries = 3;
+// Retry Logic for API Requests
+async function fetchWithRetry(url, retries = 3) {
     let attempt = 0;
-
-    cryptoNameSelect.innerHTML = '<option>Loading...</option>'; // Display loading message
-
-    while (attempt < maxRetries) {
+    while (attempt < retries) {
         try {
-            const response = await fetch(coingeckoApiUrl);
-            if (!response.ok) throw new Error("Failed to fetch data from CoinGecko.");
-
-            const cryptos = await response.json();
-            cryptoNameSelect.innerHTML = ""; // Clear loading message
-
-            cryptos.forEach((crypto) => {
-                const option = document.createElement("option");
-                option.value = crypto.id;
-                option.textContent = crypto.name;
-                cryptoNameSelect.appendChild(option);
-            });
-
-            return; // Exit loop if successful
-        } catch (error) {
-            console.error(`Attempt ${attempt + 1} failed:`, error);
-            attempt++;
-        }
-    }
-
-    cryptoNameSelect.innerHTML = '<option>Error loading data. Refresh to try again.</option>';
-}
-
-// Fetch Prices with Retry Logic
-async function fetchPricesWithRetry(maxRetries = 3) {
-    let attempt = 0;
-    while (attempt < maxRetries) {
-        try {
-            const response = await fetch(coingeckoApiUrl);
-            if (!response.ok) throw new Error("Failed to fetch prices from CoinGecko.");
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
             return await response.json();
         } catch (error) {
-            console.error(`Attempt ${attempt + 1} to fetch prices failed.`, error);
+            console.error(`Attempt ${attempt + 1} failed: ${error.message}`);
             attempt++;
+            if (attempt === retries) throw error; // Throw error on last attempt
         }
     }
-    throw new Error("Failed to fetch prices after multiple attempts.");
 }
 
-// Display Portfolio
+// Fetch Coin List with Local Caching
+async function fetchCoinList() {
+    const cacheKey = "coinList";
+    const cacheDuration = 60000; // 1 minute
+    const cached = JSON.parse(localStorage.getItem(cacheKey) || "{}");
+    const now = new Date().getTime();
+
+    if (cached.timestamp && now - cached.timestamp < cacheDuration) {
+        coinList = cached.data;
+        return;
+    }
+
+    try {
+        coinList = await fetchWithRetry(coingeckoCoinListUrl);
+        localStorage.setItem(
+            cacheKey,
+            JSON.stringify({ data: coinList, timestamp: now })
+        );
+    } catch (error) {
+        console.error("Error fetching CoinGecko coin list:", error.message);
+    }
+}
+
+// Populate Dropdown with Retry Logic and Caching
+async function populateDropdown() {
+    try {
+        const cryptos = await fetchWithRetry(coingeckoApiUrl);
+        cryptoNameSelect.innerHTML = ""; // Clear any existing options
+
+        cryptos.forEach((crypto) => {
+            const option = document.createElement("option");
+            option.value = crypto.id;
+            option.textContent = crypto.name;
+            cryptoNameSelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error populating dropdown:", error.message);
+        cryptoNameSelect.innerHTML = '<option>Error loading data. Refresh to try again.</option>';
+    }
+}
+
+// Display Portfolio with Error Handling
 async function displayPortfolio() {
     try {
-        const prices = await fetchPricesWithRetry();
-
+        const prices = await fetchWithRetry(coingeckoApiUrl);
         tableBody.innerHTML = "";
         let totalValue = 0;
 
@@ -98,27 +96,18 @@ async function displayPortfolio() {
         });
 
         totalValueElement.textContent = `Total Portfolio Value: $${totalValue.toFixed(2)}`;
+        localStorage.setItem("portfolio", JSON.stringify(portfolio));
     } catch (error) {
-        console.error("Error displaying portfolio:", error);
-        tableBody.innerHTML = portfolio.map(coin => `
-            <tr>
-                <td>${coin.name}</td>
-                <td>${coin.holdings}</td>
-                <td>N/A</td>
-                <td>N/A</td>
-            </tr>
-        `).join('');
-        totalValueElement.textContent = "Unable to fetch prices. Portfolio data may be outdated.";
+        console.error("Error displaying portfolio:", error.message);
+        totalValueElement.textContent = "Failed to load portfolio. Please refresh.";
     }
 }
 
-// Search Cryptos and Display Chart
+// Search Cryptos and Display Chart with Retry Logic
 searchForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const searchTerm = searchInput.value.trim().toLowerCase();
-    searchInput.value = ""; // Clear input after submission
-
     const matchedCoin = coinList.find(
         (coin) =>
             coin.name.toLowerCase() === searchTerm ||
@@ -131,18 +120,12 @@ searchForm.addEventListener("submit", async (e) => {
     }
 
     try {
-        chartLoader.style.display = "block"; // Show loader
-        cryptoChart.style.display = "none"; // Hide chart initially
+        chartLoader.style.display = "block";
+        cryptoChart.style.display = "none";
 
-        const response = await fetch(
+        const data = await fetchWithRetry(
             `https://api.coingecko.com/api/v3/coins/${matchedCoin.id}/market_chart?vs_currency=usd&days=7`
         );
-        const data = await response.json();
-
-        // Reset chart before drawing
-        if (Chart.getChart(cryptoChart)) {
-            Chart.getChart(cryptoChart).destroy();
-        }
 
         const labels = data.prices.map(([timestamp]) =>
             new Date(timestamp).toLocaleDateString()
@@ -165,12 +148,12 @@ searchForm.addEventListener("submit", async (e) => {
             options: { responsive: true },
         });
 
-        cryptoChart.style.display = "block"; // Show chart
+        cryptoChart.style.display = "block";
     } catch (error) {
+        console.error("Error fetching chart data:", error.message);
         alert("Failed to fetch chart data. Please try again.");
-        console.error("Error fetching chart data:", error);
     } finally {
-        chartLoader.style.display = "none"; // Hide loader
+        chartLoader.style.display = "none";
     }
 });
 
@@ -194,16 +177,15 @@ form.addEventListener("submit", (e) => {
             portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
         }
     } else {
-        alert("Please enter a valid amount.");
+        alert("Please enter a valid amount (0 to remove or greater than 0 to update).");
     }
 
-    localStorage.setItem("portfolio", JSON.stringify(portfolio)); // Save updated portfolio
-    displayPortfolio(); // Refresh the table
+    displayPortfolio();
 });
 
 // Initialize
 (async () => {
     await fetchCoinList();
     await populateDropdown();
-    displayPortfolio(); // Display portfolio on page load
+    await displayPortfolio();
 })();

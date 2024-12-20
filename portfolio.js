@@ -24,23 +24,36 @@ async function fetchCoinList() {
     }
 }
 
-// Populate Dropdown with Crypto Names
+// Populate Dropdown with Crypto Names with retry logic
 async function populateDropdown() {
-    try {
-        const response = await fetch(coingeckoApiUrl);
-        const cryptos = await response.json();
+    const maxRetries = 3;
+    let attempt = 0;
 
-        cryptoNameSelect.innerHTML = "";
-        cryptos.forEach((crypto) => {
-            const option = document.createElement("option");
-            option.value = crypto.id;
-            option.textContent = crypto.name;
+    cryptoNameSelect.innerHTML = '<option>Loading...</option>'; // Display loading message
 
-            cryptoNameSelect.appendChild(option);
-        });
-    } catch (error) {
-        console.error("Error populating dropdown:", error);
+    while (attempt < maxRetries) {
+        try {
+            const response = await fetch(coingeckoApiUrl);
+            if (!response.ok) throw new Error("Failed to fetch data from CoinGecko.");
+
+            const cryptos = await response.json();
+            cryptoNameSelect.innerHTML = ""; // Clear loading message
+
+            cryptos.forEach((crypto) => {
+                const option = document.createElement("option");
+                option.value = crypto.id;
+                option.textContent = crypto.name;
+                cryptoNameSelect.appendChild(option);
+            });
+
+            return; // Exit loop if successful
+        } catch (error) {
+            console.error(`Attempt ${attempt + 1} failed:`, error);
+            attempt++;
+        }
     }
+
+    cryptoNameSelect.innerHTML = '<option>Error loading data. Refresh to try again.</option>';
 }
 
 // Display Portfolio

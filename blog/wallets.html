@@ -10,7 +10,7 @@
         .wallet-section {
             padding: 20px;
             margin-bottom: 30px;
-            background: rgba(20, 20, 20, 0.9); /* Slightly lighter background for contrast */
+            background: rgba(0, 0, 0, 0.9);
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
         }
@@ -21,8 +21,9 @@
             margin-bottom: 15px;
         }
 
-        .wallet-section p {
-            color: #f1f1f1; /* Brighter text for better contrast */
+        .wallet-section p,
+        .wallet-section li {
+            color: #ffffff; /* Ensure all text is white */
             line-height: 1.6;
         }
 
@@ -31,14 +32,9 @@
             padding-left: 0;
         }
 
-        .wallet-section li {
-            margin-bottom: 10px;
-        }
-
         .wallet-section a {
             color: #00d4ff;
             text-decoration: none;
-            font-weight: bold;
         }
 
         .wallet-section a:hover {
@@ -52,7 +48,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="../index.html">AwokeCrypto</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">

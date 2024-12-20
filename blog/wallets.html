@@ -3,52 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recommended Wallets | AwokeCrypto</title>
+    <title>Recommended Crypto Wallets</title>
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <style>
-        body {
-            background-color: #0a0a0a;
-            color: #ffffff;
-            font-family: 'Orbitron', sans-serif;
-            margin: 0;
-            padding: 0;
+        .wallet-section {
+            padding: 20px;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .section {
-            padding: 60px 20px;
-        }
-
-        .section h2 {
+        .wallet-section h2 {
             color: #00d4ff;
-            text-shadow: 0 0 10px #00d4ff;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
         }
 
-        .section p {
-            color: #cccccc;
+        .wallet-section p {
+            color: #ccc;
+            line-height: 1.6;
         }
 
-        .card {
-            background: #1e1e1e;
-            color: #ffffff;
-            border: 1px solid #333;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
-        }
-
-        .card h5 {
+        .wallet-section a {
             color: #00d4ff;
+            text-decoration: underline;
         }
 
-        .btn-primary {
-            background-color: #00d4ff;
-            border: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #007bff;
+        .wallet-section a:hover {
+            color: #007bff;
         }
     </style>
 </head>
@@ -57,14 +40,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="../index.html">AwokeCrypto</a>
-            <button 
-                class="navbar-toggler" 
-                type="button" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#navbarNav" 
-                aria-controls="navbarNav" 
-                aria-expanded="false" 
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -79,69 +55,41 @@
         </div>
     </nav>
 
-    <!-- Page Header -->
-    <header class="hero-section text-center py-5">
-        <h1>Recommended Crypto Wallets</h1>
-        <p>Your guide to securely storing your digital assets.</p>
-    </header>
+    <!-- Main Content -->
+    <section class="container py-5">
+        <h1 class="text-center mb-5">Recommended Crypto Wallets</h1>
 
-    <!-- Hardware Wallets Section -->
-    <section class="section container">
-        <h2>Hardware Wallets</h2>
-        <p>Hardware wallets are physical devices that store your private keys offline, providing an additional layer of security against online threats. Examples include:</p>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card p-3 mb-4">
-                    <h5>Ledger Nano X</h5>
-                    <p>The Ledger Nano X is a top-tier hardware wallet supporting a wide range of cryptocurrencies with Bluetooth connectivity for ease of use.</p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card p-3 mb-4">
-                    <h5>Trezor Model T</h5>
-                    <p>Trezor Model T offers an intuitive touchscreen interface and robust security features, making it ideal for long-term storage.</p>
-                </div>
-            </div>
+        <!-- Hardware Wallets -->
+        <div class="wallet-section">
+            <h2>Hardware Wallets</h2>
+            <p>Hardware wallets are physical devices that provide the highest level of security for your cryptocurrency. Here are the top hardware wallets:</p>
+            <ul>
+                <li><a href="https://www.ledger.com" target="_blank">Ledger Wallet</a> - A popular choice with advanced security features and a user-friendly interface.</li>
+                <li><a href="https://trezor.io" target="_blank">Trezor Wallet</a> - Known for its simplicity and strong security protocols.</li>
+                <li><a href="https://ellipal.com" target="_blank">Ellipal Wallet</a> - A secure air-gapped wallet with mobile compatibility.</li>
+            </ul>
         </div>
-    </section>
 
-    <!-- Software Wallets Section -->
-    <section class="section container">
-        <h2>Software Wallets</h2>
-        <p>Software wallets are applications that store private keys on your device. They are convenient and often free. Popular software wallets include:</p>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card p-3 mb-4">
-                    <h5>MetaMask</h5>
-                    <p>A browser extension and mobile app, MetaMask allows you to manage Ethereum-based assets and interact with decentralized applications (dApps).</p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card p-3 mb-4">
-                    <h5>Trust Wallet</h5>
-                    <p>Trust Wallet supports multiple blockchains and offers an intuitive interface for storing, buying, and staking cryptocurrencies.</p>
-                </div>
-            </div>
+        <!-- Software Wallets -->
+        <div class="wallet-section">
+            <h2>Software Wallets</h2>
+            <p>Software wallets are applications that can be installed on your desktop or mobile device. They provide a good balance of security and convenience:</p>
+            <ul>
+                <li><a href="https://www.metamask.io" target="_blank">MetaMask</a> - A browser extension and mobile app for managing Ethereum and ERC-20 tokens.</li>
+                <li><a href="https://trustwallet.com" target="_blank">Trust Wallet</a> - A versatile mobile wallet supporting multiple cryptocurrencies.</li>
+                <li><a href="https://exodus.com" target="_blank">Exodus Wallet</a> - A desktop and mobile wallet with a sleek design and multi-asset support.</li>
+            </ul>
         </div>
-    </section>
 
-    <!-- Other Wallets Section -->
-    <section class="section container">
-        <h2>Other Types of Wallets</h2>
-        <p>Depending on your needs, you may explore other types of wallets, such as paper wallets or custodial wallets:</p>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card p-3 mb-4">
-                    <h5>Paper Wallets</h5>
-                    <p>Paper wallets are physical copies of your private and public keys, printed on paper. They are completely offline but require careful handling.</p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card p-3 mb-4">
-                    <h5>Custodial Wallets</h5>
-                    <p>Custodial wallets are managed by third-party services like exchanges. They are convenient but rely on the security of the provider.</p>
-                </div>
-            </div>
+        <!-- Other Wallet Options -->
+        <div class="wallet-section">
+            <h2>Other Wallets</h2>
+            <p>These wallets offer unique features tailored to specific use cases:</p>
+            <ul>
+                <li><a href="https://www.coinbase.com/wallet" target="_blank">Coinbase Wallet</a> - Ideal for beginners using the Coinbase platform.</li>
+                <li><a href="https://myetherwallet.com" target="_blank">MyEtherWallet</a> - A trusted wallet for Ethereum and ERC-20 tokens.</li>
+                <li><a href="https://guarda.com" target="_blank">Guarda Wallet</a> - A secure multi-platform wallet with staking features.</li>
+            </ul>
         </div>
     </section>
 

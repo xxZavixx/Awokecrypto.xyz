@@ -24,7 +24,7 @@ async function fetchCoinList() {
     }
 }
 
-// Populate Dropdown with Crypto Names with retry logic
+// Populate Dropdown with retry logic
 async function populateDropdown() {
     const maxRetries = 3;
     let attempt = 0;
@@ -56,11 +56,26 @@ async function populateDropdown() {
     cryptoNameSelect.innerHTML = '<option>Error loading data. Refresh to try again.</option>';
 }
 
+// Fetch Prices with Retry Logic
+async function fetchPricesWithRetry(maxRetries = 3) {
+    let attempt = 0;
+    while (attempt < maxRetries) {
+        try {
+            const response = await fetch(coingeckoApiUrl);
+            if (!response.ok) throw new Error("Failed to fetch prices from CoinGecko.");
+            return await response.json();
+        } catch (error) {
+            console.error(`Attempt ${attempt + 1} to fetch prices failed.`, error);
+            attempt++;
+        }
+    }
+    throw new Error("Failed to fetch prices after multiple attempts.");
+}
+
 // Display Portfolio
 async function displayPortfolio() {
     try {
-        const response = await fetch(coingeckoApiUrl);
-        const prices = await response.json();
+        const prices = await fetchPricesWithRetry();
 
         tableBody.innerHTML = "";
         let totalValue = 0;
@@ -83,9 +98,17 @@ async function displayPortfolio() {
         });
 
         totalValueElement.textContent = `Total Portfolio Value: $${totalValue.toFixed(2)}`;
-        localStorage.setItem("portfolio", JSON.stringify(portfolio));
     } catch (error) {
         console.error("Error displaying portfolio:", error);
+        tableBody.innerHTML = portfolio.map(coin => `
+            <tr>
+                <td>${coin.name}</td>
+                <td>${coin.holdings}</td>
+                <td>N/A</td>
+                <td>N/A</td>
+            </tr>
+        `).join('');
+        totalValueElement.textContent = "Unable to fetch prices. Portfolio data may be outdated.";
     }
 }
 
@@ -94,6 +117,8 @@ searchForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const searchTerm = searchInput.value.trim().toLowerCase();
+    searchInput.value = ""; // Clear input after submission
+
     const matchedCoin = coinList.find(
         (coin) =>
             coin.name.toLowerCase() === searchTerm ||
@@ -115,8 +140,9 @@ searchForm.addEventListener("submit", async (e) => {
         const data = await response.json();
 
         // Reset chart before drawing
-        const existingChart = Chart.getChart(cryptoChart);
-        if (existingChart) existingChart.destroy();
+        if (Chart.getChart(cryptoChart)) {
+            Chart.getChart(cryptoChart).destroy();
+        }
 
         const labels = data.prices.map(([timestamp]) =>
             new Date(timestamp).toLocaleDateString()
@@ -158,27 +184,26 @@ form.addEventListener("submit", (e) => {
 
     const existingCoin = portfolio.find((coin) => coin.id === cryptoId);
 
-    // Remove if holdings are 0
     if (amount === 0) {
         portfolio = portfolio.filter((coin) => coin.id !== cryptoId);
         alert(`${cryptoName} has been removed from your portfolio.`);
     } else if (amount > 0) {
-        // Update existing or add new
         if (existingCoin) {
             existingCoin.holdings = amount;
         } else {
             portfolio.push({ id: cryptoId, name: cryptoName, holdings: amount });
         }
     } else {
-        alert("Please enter a valid amount (0 to remove or greater than 0 to update).");
+        alert("Please enter a valid amount.");
     }
 
-    displayPortfolio();
+    localStorage.setItem("portfolio", JSON.stringify(portfolio)); // Save updated portfolio
+    displayPortfolio(); // Refresh the table
 });
 
 // Initialize
 (async () => {
     await fetchCoinList();
     await populateDropdown();
-    await displayPortfolio();
+    displayPortfolio(); // Display portfolio on page load
 })();

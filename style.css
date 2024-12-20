@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     color: #ffffff;
-    background-color: #0a0a0a;
+    background-color: #0a0a0a; /* Dark background */
     line-height: 1.6;
 }
 
@@ -114,45 +114,88 @@ body {
     color: #cccccc;
 }
 
-/* Blog Page Cards */
-.card {
-    background: rgba(0, 0, 0, 0.9);
-    border: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Forms and Cards */
+.card, .form-control {
+    background-color: #1e1e1e; /* Dark card/form background */
+    border: 1px solid #333; /* Subtle border */
+    color: #ffffff; /* Light text color */
 }
 
 .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+    background-color: #282828; /* Slight hover effect for cards */
 }
 
-.card-title {
-    font-size: 1.2rem;
-    color: #007bff;
-    font-weight: bold;
+.form-control::placeholder {
+    color: #cccccc; /* Subtle placeholder text */
 }
 
-.card-img-top {
-    height: 200px;
-    object-fit: cover;
-    border-bottom: 2px solid #00d4ff;
+.card-body {
+    color: #ffffff;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .features {
-        flex-direction: column;
-        gap: 30px;
-    }
+/* Portfolio Section */
+.portfolio-section {
+    background-color: #121212;
+    color: #ffffff;
+    padding: 40px 20px;
+    text-align: center;
+}
 
-    .feature-card {
-        width: 100%;
-        max-width: none;
-    }
+.table-dark {
+    background-color: #1e1e2f;
+    color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
 
-    .hero-section h1 {
-        font-size: 2.5rem;
-    }
+.table-dark th, .table-dark td {
+    border-color: #343a40;
+    padding: 12px;
+}
+
+#total-value {
+    color: #00d4ff;
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+/* Contact Section */
+.contact-section {
+    background-color: #0a0a0a;
+    color: #ffffff;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.contact-section h1 {
+    color: #00d4ff;
+    margin-bottom: 20px;
+}
+
+.contact-section form {
+    display: inline-block;
+    width: 100%;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.contact-section input,
+.contact-section textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.contact-section input::placeholder,
+.contact-section textarea::placeholder {
+    color: #cccccc;
 }
 
 /* Footer */
@@ -162,4 +205,20 @@ footer {
     text-align: center;
     padding: 20px 0;
     font-size: 0.9rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .features {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .feature-card {
+        width: 100%;
+    }
 }

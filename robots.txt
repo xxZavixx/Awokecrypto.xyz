@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /private/  # Disallows crawling of a private folder
+
+Sitemap: http://awokecrypto.xyz/sitemap.xml
